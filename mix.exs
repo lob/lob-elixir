@@ -16,8 +16,7 @@ defmodule Lob.Mixfile do
           :no_opaque,
           :race_conditions,
           :unknown
-        ],
-        ignore_warnings: ".dialyzer_ignore"
+        ]
       ]
     ]
   end

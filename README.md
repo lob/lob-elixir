@@ -1,6 +1,6 @@
 # lob_elixir
 
-**TODO: Add description**
+Elixir Wrapper for Lob API
 
 ## Installation
 
