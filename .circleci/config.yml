@@ -30,10 +30,10 @@ stages:
         command: mix dialyzer --halt-exit-status
 
       - type: cache-save
-        key: dialyzer-v1-{{ checksum "_build/test/dialyxir_erlang-20.0.2_elixir-1.5.1_deps-test.plt.hash" }}
+        key: dialyzer-v1-{{ checksum "_build/test/dialyxir_erlang-20.1.2_elixir-1.5.2_deps-test.plt.hash" }}
         paths:
-          - _build/test/dialyxir_erlang-20.0.2_elixir-1.5.1_deps-test.plt
-          - _build/test/dialyxir_erlang-20.0.2_elixir-1.5.1_deps-test.plt.hash
+          - _build/test/dialyxir_erlang-20.1.2_elixir-1.5.2_deps-test.plt
+          - _build/test/dialyxir_erlang-20.1.2_elixir-1.5.2_deps-test.plt.hash
 
 experimental:
   notify:
