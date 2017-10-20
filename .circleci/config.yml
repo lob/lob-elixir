@@ -25,7 +25,7 @@ stages:
         command: mix coveralls.html --max-cases 1
 
       - type: shell
-        command: mix dogma
+        command: mix credo
 
       - type: shell
         command: mix dialyzer --halt-exit-status

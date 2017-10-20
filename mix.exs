@@ -31,8 +31,8 @@ defmodule Lob.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5.1", only: [:dev, :test], runtime: false},
-      {:dogma, "~> 0.1.15", only: [:dev, :test]},
       {:excoveralls, "~> 0.7.4", only: :test}
     ]
   end
