@@ -11,7 +11,8 @@ stages:
       - type: checkout
 
       - type: cache-restore
-        key: dialyzer-v1
+        key: build-deps-v1-{{ checksum "mix.lock" }}
+        key: build-deps-v1-
 
       - type: shell
         command: |
@@ -30,10 +31,10 @@ stages:
         command: mix dialyzer --halt-exit-status
 
       - type: cache-save
-        key: dialyzer-v1-{{ checksum "_build/test/dialyxir_erlang-20.1.2_elixir-1.5.2_deps-test.plt.hash" }}
+        key: build-deps-v1-{{ checksum "mix.lock" }}
         paths:
-          - _build/test/dialyxir_erlang-20.1.2_elixir-1.5.2_deps-test.plt
-          - _build/test/dialyxir_erlang-20.1.2_elixir-1.5.2_deps-test.plt.hash
+          - _build
+          - deps
 
 experimental:
   notify:
