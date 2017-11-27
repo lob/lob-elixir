@@ -3,8 +3,6 @@ defmodule Lob.Postcards do
   Module implementing the Lob postcards API.
   """
 
-  use Lob.ResourceBase, [:create, :retrieve, :list, :delete]
-
-  def endpoint, do: "postcards"
+  use Lob.ResourceBase, endpoint: "postcards", methods: [:create, :retrieve, :list, :delete]
 
 end
