@@ -38,7 +38,7 @@ defmodule Lob.Client do
     end
   end
 
-  @spec api_version :: String.t
+  @spec api_version :: String.t | nil
   def api_version, do: Application.get_env(:lob_elixir, :api_version, System.get_env("LOB_API_VERSION"))
 
   # #########################
