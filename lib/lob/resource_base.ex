@@ -14,7 +14,7 @@ defmodule Lob.ResourceBase do
       if :list in unquote(methods) do
         @spec list(map, map) :: Client.response
         def list(params \\ %{}, headers \\ %{}) do
-          Client.get_request(base_url() <> "?" <> Util.build_query_string(params), Util.build_headers(headers))
+          Client.get_request("#{base_url()}?#{Util.build_query_string(params)}" , Util.build_headers(headers))
         end
       end
 
@@ -40,15 +40,12 @@ defmodule Lob.ResourceBase do
       end
 
       @spec base_url :: String.t
-      defp base_url do
-        "#{Application.get_env(:lob_elixir, :api_endpoint)}/#{unquote(endpoint)}"
-      end
+      defp base_url, do: "#{Application.get_env(:lob_elixir, :api_endpoint)}/#{unquote(endpoint)}"
 
       @spec resource_url(String.t) :: String.t
-      defp resource_url(resource_id) do
-        "#{base_url()}/#{resource_id}"
-      end
+      defp resource_url(resource_id), do: "#{base_url()}/#{resource_id}"
     end
+
   end
 
 end

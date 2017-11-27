@@ -1,4 +1,4 @@
-defmodule Lob.Postcards do
+defmodule Lob.Postcard do
   @moduledoc """
   Module implementing the Lob postcards API.
   """

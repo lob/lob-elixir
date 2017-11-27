@@ -27,22 +27,19 @@ defmodule Lob.Client do
     """
   end
 
-  @spec version :: String.t
-  def version do
-    @client_version
-  end
+  @spec client_version :: String.t
+  def client_version, do: @client_version
 
   @spec api_key(atom) :: String.t
   def api_key(env_key \\ :api_key) do
     case Application.get_env(:lob_elixir, env_key, System.get_env("LOB_API_KEY")) || :not_found do
-      :not_found ->
-        raise MissingAPIKeyError
+      :not_found -> raise MissingAPIKeyError
       value -> value
     end
   end
 
   @spec api_version :: String.t
-  def api_version, do: Application.get_env(:lob_elixir, :api_version, System.get_env "LOB_API_VERSION") || ""
+  def api_version, do: Application.get_env(:lob_elixir, :api_version, System.get_env("LOB_API_VERSION"))
 
   # #########################
   # HTTPoison.Base callbacks
@@ -104,13 +101,11 @@ defmodule Lob.Client do
 
   @spec build_options(String.t) :: Keyword.t
   defp build_options(api_key \\ api_key()) do
-    [hackney: [pool: :default, basic_auth: {api_key, ""}]]
+    [hackney: [basic_auth: {api_key, ""}]]
   end
 
-  @spec default_headers(String.t) :: %{String.t => String.t}
-  defp default_headers(api_version) do
-    Map.new
-    |> Map.put("User-Agent", "Lob/v1 ElixirBindings/#{version()}")
-    |> Map.put("Lob-Version", api_version)
-  end
+  @spec default_headers(String.t | nil) :: %{String.t => String.t}
+  defp default_headers(nil), do: %{"User-Agent" => "Lob/v1 ElixirBindings/#{client_version()}"}
+  defp default_headers(api_version), do: %{"User-Agent" => "Lob/v1 ElixirBindings/#{client_version()}", "Lob-Version" => api_version}
+
 end

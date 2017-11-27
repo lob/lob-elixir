@@ -1,7 +1,7 @@
-defmodule Lob.PostcardsTest do
+defmodule Lob.PostcardTest do
   use ExUnit.Case
 
-  alias Lob.Postcards
+  alias Lob.Postcard
 
   setup do
     sample_address = %{
@@ -12,11 +12,11 @@ defmodule Lob.PostcardsTest do
       address_city: "San Francisco",
       address_state: "CA",
       address_country: "US",
-      address_zip: 94107
+      address_zip: "94107"
     }
 
     sample_postcard = %{
-      description: "Library Test Postcard ##{:rand.uniform(1_000_000)}",
+      description: "Library Test Postcard #{DateTime.utc_now |> DateTime.to_string}",
       back: "<h1>Sample postcard back</h1>"
     }
 
@@ -31,22 +31,22 @@ defmodule Lob.PostcardsTest do
   describe "list/2" do
 
     test "should list postcards" do
-      {:ok, postcards, _headers} = Postcards.list()
+      {:ok, postcards, _headers} = Postcard.list()
       assert postcards.object == "list"
     end
 
     test "should include total count" do
-      {:ok, postcards, _headers} = Postcards.list(%{include: ["total_count"]})
+      {:ok, postcards, _headers} = Postcard.list(%{include: ["total_count"]})
       assert Map.get(postcards, :total_count) != nil
     end
 
     test "should list by limit" do
-      {:ok, postcards, _headers} = Postcards.list(%{limit: 2})
+      {:ok, postcards, _headers} = Postcard.list(%{limit: 2})
       assert postcards.count == 2
     end
 
     test "should filter by metadata" do
-      {:ok, postcards, _headers} = Postcards.list(%{metadata: %{foo: "bar"}})
+      {:ok, postcards, _headers} = Postcard.list(%{metadata: %{foo: "bar"}})
       assert postcards.count == 1
     end
 
@@ -56,14 +56,14 @@ defmodule Lob.PostcardsTest do
 
     test "should retrieve a postcard", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, _headers} =
-        Postcards.create(%{
+        Postcard.create(%{
           description: sample_postcard.description,
           to: test_address_id,
           front: "https://lob.com/postcardfront.pdf",
           back: "https://lob.com/postcardback.pdf"
         })
 
-        {:ok, retrieved_postcard, _headers} = Postcards.retrieve(created_postcard.id)
+        {:ok, retrieved_postcard, _headers} = Postcard.retrieve(created_postcard.id)
         assert retrieved_postcard.description == created_postcard.description
     end
 
@@ -73,7 +73,7 @@ defmodule Lob.PostcardsTest do
 
     test "should create a postcard with address_id", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, headers} =
-        Postcards.create(%{
+        Postcard.create(%{
           description: sample_postcard.description,
           to: test_address_id,
           front: "https://lob.com/postcardfront.pdf",
@@ -86,7 +86,7 @@ defmodule Lob.PostcardsTest do
 
     test "should create a postcard with to address params", %{sample_postcard: sample_postcard, sample_address: sample_address} do
       {:ok, created_postcard, headers} =
-        Postcards.create(%{
+        Postcard.create(%{
           description: sample_postcard.description,
           to: sample_address,
           front: "https://lob.com/postcardfront.pdf",
@@ -99,7 +99,7 @@ defmodule Lob.PostcardsTest do
 
     test "should create a postcard with from address params", %{test_address_id: test_address_id, sample_postcard: sample_postcard, sample_address: sample_address} do
       {:ok, created_postcard, headers} =
-        Postcards.create(%{
+        Postcard.create(%{
           description: sample_postcard.description,
           to: test_address_id,
           from: sample_address,
@@ -113,7 +113,7 @@ defmodule Lob.PostcardsTest do
 
     test "should create a postcard with front and back as urls", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, headers} =
-        Postcards.create(%{
+        Postcard.create(%{
           description: sample_postcard.description,
           to: test_address_id,
           front: "https://lob.com/postcardfront.pdf",
@@ -126,7 +126,7 @@ defmodule Lob.PostcardsTest do
 
     test "should create a postcard with front and back as PDFs", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, headers} =
-        Postcards.create(%{
+        Postcard.create(%{
           description: sample_postcard.description,
           to: test_address_id,
           front: %{local_path: "test/assets/postcardfront.pdf"},
@@ -141,7 +141,7 @@ defmodule Lob.PostcardsTest do
       idempotency_key = UUID.uuid4()
 
       {:ok, created_postcard, _headers} =
-        Postcards.create(%{
+        Postcard.create(%{
           description: sample_postcard.description,
           to: test_address_id,
           front: %{local_path: "test/assets/postcardfront.pdf"},
@@ -151,7 +151,7 @@ defmodule Lob.PostcardsTest do
         })
 
       {:ok, duplicated_postcard, _headers} =
-        Postcards.create(%{
+        Postcard.create(%{
           description: "Duplicated Postcard",
           to: test_address_id,
           front: %{local_path: "test/assets/postcardfront.pdf"},
@@ -169,14 +169,14 @@ defmodule Lob.PostcardsTest do
 
     test "should destroy a postcard", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, _headers} =
-        Postcards.create(%{
+        Postcard.create(%{
           description: sample_postcard.description,
           to: test_address_id,
           front: "https://lob.com/postcardfront.pdf",
           back: "https://lob.com/postcardback.pdf"
         })
 
-        {:ok, deleted_postcard, _headers} = Postcards.delete(created_postcard.id)
+        {:ok, deleted_postcard, _headers} = Postcard.delete(created_postcard.id)
         assert deleted_postcard.id == created_postcard.id
         assert deleted_postcard.deleted == true
     end
