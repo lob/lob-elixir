@@ -21,19 +21,21 @@ defmodule Lob.Mixfile do
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:bypass, "~> 0.8", only: :test},
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5.1", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.7.4", only: :test}
+      {:excoveralls, "~> 0.7.4", only: :test},
+      {:httpoison, "~> 0.13"},
+      {:poison, "~> 3.1"},
+      {:uuid, "~> 1.1", only: :test}
     ]
   end
 end
