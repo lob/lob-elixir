@@ -145,7 +145,7 @@ defmodule Lob.LetterTest do
 
   describe "delete/2" do
 
-    test "destroys a letter", %{test_address_id: test_address_id, sample_letter: sample_letter} do
+    test "deletes a letter", %{test_address_id: test_address_id, sample_letter: sample_letter} do
       {:ok, created_letter, _headers} =
         Letter.create(%{
           description: sample_letter.description,

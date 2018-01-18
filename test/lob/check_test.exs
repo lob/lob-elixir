@@ -63,7 +63,7 @@ defmodule Lob.CheckTest do
           to: test_address_id,
           from: test_address_id,
           bank_account: test_bank_account_id,
-          amount: "42"
+          amount: 42
         })
 
       {:ok, retrieved_check, _headers} = Check.retrieve(created_check.id)
@@ -81,7 +81,7 @@ defmodule Lob.CheckTest do
           to: test_address_id,
           from: test_address_id,
           bank_account: test_bank_account_id,
-          amount: "42"
+          amount: 42
         })
 
       assert created_check.description == sample_check.description
@@ -95,7 +95,7 @@ defmodule Lob.CheckTest do
           to: sample_address,
           from: sample_address,
           bank_account: test_bank_account_id,
-          amount: "42"
+          amount: 42
         })
 
       assert created_check.description == sample_check.description
@@ -109,7 +109,7 @@ defmodule Lob.CheckTest do
           to: test_address_id,
           from: test_address_id,
           bank_account: test_bank_account_id,
-          amount: "42",
+          amount: 42,
           logo: "http://via.placeholder.com/100x100",
           check_bottom: "https://s3-us-west-2.amazonaws.com/lob-assets/letter-goblue.pdf",
           attachment: "https://s3-us-west-2.amazonaws.com/lob-assets/letter-goblue.pdf"
@@ -126,7 +126,7 @@ defmodule Lob.CheckTest do
           to: test_address_id,
           from: test_address_id,
           bank_account: test_bank_account_id,
-          amount: "42",
+          amount: 42,
           logo: %{local_path: "test/assets/logo.png"},
           check_bottom: %{local_path: "test/assets/8.5x11.pdf"},
           attachment: %{local_path: "test/assets/8.5x11.pdf"}
@@ -145,7 +145,7 @@ defmodule Lob.CheckTest do
           to: test_address_id,
           from: test_address_id,
           bank_account: test_bank_account_id,
-          amount: "42"
+          amount: 42
         }, %{
           "Idempotency-Key" => idempotency_key
         })
@@ -156,7 +156,7 @@ defmodule Lob.CheckTest do
           to: test_address_id,
           from: test_address_id,
           bank_account: test_bank_account_id,
-          amount: "42"
+          amount: 42
         }, %{
           "Idempotency-Key" => idempotency_key
         })
@@ -168,14 +168,14 @@ defmodule Lob.CheckTest do
 
   describe "delete/2" do
 
-    test "destroys a check", %{test_address_id: test_address_id, test_bank_account_id: test_bank_account_id, sample_check: sample_check} do
+    test "deletes a check", %{test_address_id: test_address_id, test_bank_account_id: test_bank_account_id, sample_check: sample_check} do
       {:ok, created_check, _headers} =
         Check.create(%{
           description: sample_check.description,
           to: test_address_id,
           from: test_address_id,
           bank_account: test_bank_account_id,
-          amount: "42"
+          amount: 42
         })
 
         {:ok, deleted_check, _headers} = Check.delete(created_check.id)

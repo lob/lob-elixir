@@ -167,7 +167,7 @@ defmodule Lob.PostcardTest do
 
   describe "delete/2" do
 
-    test "destroys a postcard", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "deletes a postcard", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, _headers} =
         Postcard.create(%{
           description: sample_postcard.description,
