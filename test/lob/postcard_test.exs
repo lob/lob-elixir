@@ -30,22 +30,22 @@ defmodule Lob.PostcardTest do
 
   describe "list/2" do
 
-    test "should list postcards" do
+    test "lists postcards" do
       {:ok, postcards, _headers} = Postcard.list()
       assert postcards.object == "list"
     end
 
-    test "should include total count" do
+    test "includes total count" do
       {:ok, postcards, _headers} = Postcard.list(%{include: ["total_count"]})
       assert Map.get(postcards, :total_count) != nil
     end
 
-    test "should list by limit" do
+    test "lists by limit" do
       {:ok, postcards, _headers} = Postcard.list(%{limit: 2})
       assert postcards.count == 2
     end
 
-    test "should filter by metadata" do
+    test "filters by metadata" do
       {:ok, postcards, _headers} = Postcard.list(%{metadata: %{foo: "bar"}})
       assert postcards.count == 1
     end
@@ -54,7 +54,7 @@ defmodule Lob.PostcardTest do
 
   describe "retrieve/2" do
 
-    test "should retrieve a postcard", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "retrieves a postcard", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, _headers} =
         Postcard.create(%{
           description: sample_postcard.description,
@@ -63,15 +63,15 @@ defmodule Lob.PostcardTest do
           back: "https://lob.com/postcardback.pdf"
         })
 
-        {:ok, retrieved_postcard, _headers} = Postcard.retrieve(created_postcard.id)
-        assert retrieved_postcard.description == created_postcard.description
+      {:ok, retrieved_postcard, _headers} = Postcard.retrieve(created_postcard.id)
+      assert retrieved_postcard.description == created_postcard.description
     end
 
   end
 
   describe "create/2" do
 
-    test "should create a postcard with address_id", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "creates a postcard with address_id", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, headers} =
         Postcard.create(%{
           description: sample_postcard.description,
@@ -84,7 +84,7 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "should create a postcard with to address params", %{sample_postcard: sample_postcard, sample_address: sample_address} do
+    test "creates a postcard with to address params", %{sample_postcard: sample_postcard, sample_address: sample_address} do
       {:ok, created_postcard, headers} =
         Postcard.create(%{
           description: sample_postcard.description,
@@ -97,7 +97,7 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "should create a postcard with from address params", %{test_address_id: test_address_id, sample_postcard: sample_postcard, sample_address: sample_address} do
+    test "creates a postcard with from address params", %{test_address_id: test_address_id, sample_postcard: sample_postcard, sample_address: sample_address} do
       {:ok, created_postcard, headers} =
         Postcard.create(%{
           description: sample_postcard.description,
@@ -111,7 +111,7 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "should create a postcard with front and back as urls", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "creates a postcard with front and back as urls", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, headers} =
         Postcard.create(%{
           description: sample_postcard.description,
@@ -124,7 +124,7 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "should create a postcard with front and back as PDFs", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "creates a postcard with front and back as PDFs", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, headers} =
         Postcard.create(%{
           description: sample_postcard.description,
@@ -137,7 +137,7 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "should create a postcard with an idempotency key", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "creates a postcard with an idempotency key", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       idempotency_key = UUID.uuid4()
 
       {:ok, created_postcard, _headers} =
@@ -167,7 +167,7 @@ defmodule Lob.PostcardTest do
 
   describe "delete/2" do
 
-    test "should destroy a postcard", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "deletes a postcard", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
       {:ok, created_postcard, _headers} =
         Postcard.create(%{
           description: sample_postcard.description,
