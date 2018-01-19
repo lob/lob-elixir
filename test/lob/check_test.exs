@@ -2,6 +2,7 @@ defmodule Lob.CheckTest do
   use ExUnit.Case
 
   alias Lob.Address
+  alias Lob.BankAccount
   alias Lob.Check
 
   setup do
@@ -16,15 +17,21 @@ defmodule Lob.CheckTest do
       address_zip: "94107"
     }
 
+    sample_bank_account = %{
+      routing_number: "122100024",
+      account_number: "123456789",
+      account_type: "company",
+      signatory: "John Doe"
+    }
+
     sample_check = %{
       description: "Library Test Check #{DateTime.utc_now |> DateTime.to_string}",
       amount: 100
     }
 
-    # TODO(anthony): Once bank account API is added to wrapper, replace this ID with a created bank account
     %{
-      test_bank_account_id: "bank_ffbb58dbc5a51d8",
       sample_address: sample_address,
+      sample_bank_account: sample_bank_account,
       sample_check: sample_check
     }
   end
@@ -55,15 +62,16 @@ defmodule Lob.CheckTest do
 
   describe "retrieve/2" do
 
-    test "retrieves a check", %{sample_address: sample_address, test_bank_account_id: test_bank_account_id, sample_check: sample_check} do
+    test "retrieves a check", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
       {:ok, created_address, _headers} = Address.create(sample_address)
+      {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
       {:ok, created_check, _headers} =
         Check.create(%{
           description: sample_check.description,
           to: created_address.id,
           from: created_address.id,
-          bank_account: test_bank_account_id,
+          bank_account: verified_bank_account.id,
           amount: 42
         })
 
@@ -75,15 +83,16 @@ defmodule Lob.CheckTest do
 
   describe "create/2" do
 
-    test "creates a check with address_id", %{sample_address: sample_address, test_bank_account_id: test_bank_account_id, sample_check: sample_check} do
+    test "creates a check with address_id", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
       {:ok, created_address, _headers} = Address.create(sample_address)
+      {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
       {:ok, created_check, headers} =
         Check.create(%{
           description: sample_check.description,
           to: created_address.id,
           from: created_address.id,
-          bank_account: test_bank_account_id,
+          bank_account: verified_bank_account.id,
           amount: 42
         })
 
@@ -91,13 +100,15 @@ defmodule Lob.CheckTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a check with address params", %{sample_check: sample_check, test_bank_account_id: test_bank_account_id, sample_address: sample_address} do
+    test "creates a check with address params", %{sample_check: sample_check, sample_bank_account: sample_bank_account, sample_address: sample_address} do
+      {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
+
       {:ok, created_check, headers} =
         Check.create(%{
           description: sample_check.description,
           to: sample_address,
           from: sample_address,
-          bank_account: test_bank_account_id,
+          bank_account: verified_bank_account.id,
           amount: 42
         })
 
@@ -105,15 +116,16 @@ defmodule Lob.CheckTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a check with logo, attachment and check bottom as URL", %{sample_address: sample_address, test_bank_account_id: test_bank_account_id, sample_check: sample_check} do
+    test "creates a check with logo, attachment and check bottom as URL", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
       {:ok, created_address, _headers} = Address.create(sample_address)
+      {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
       {:ok, created_check, headers} =
         Check.create(%{
           description: sample_check.description,
           to: created_address.id,
           from: created_address.id,
-          bank_account: test_bank_account_id,
+          bank_account: verified_bank_account.id,
           amount: 42,
           logo: "http://via.placeholder.com/100x100",
           check_bottom: "https://s3-us-west-2.amazonaws.com/lob-assets/letter-goblue.pdf",
@@ -124,15 +136,16 @@ defmodule Lob.CheckTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a check with logo as PNG and attachment and check bottom as PDF", %{sample_address: sample_address, test_bank_account_id: test_bank_account_id, sample_check: sample_check} do
+    test "creates a check with logo as PNG and attachment and check bottom as PDF", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
       {:ok, created_address, _headers} = Address.create(sample_address)
+      {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
       {:ok, created_check, headers} =
         Check.create(%{
           description: sample_check.description,
           to: created_address.id,
           from: created_address.id,
-          bank_account: test_bank_account_id,
+          bank_account: verified_bank_account.id,
           amount: 42,
           logo: %{local_path: "test/assets/logo.png"},
           check_bottom: %{local_path: "test/assets/8.5x11.pdf"},
@@ -143,8 +156,10 @@ defmodule Lob.CheckTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a check with an idempotency key", %{sample_address: sample_address, test_bank_account_id: test_bank_account_id, sample_check: sample_check} do
+    test "creates a check with an idempotency key", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
       {:ok, created_address, _headers} = Address.create(sample_address)
+      {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
+
       idempotency_key = UUID.uuid4()
 
       {:ok, created_check, _headers} =
@@ -152,7 +167,7 @@ defmodule Lob.CheckTest do
           description: sample_check.description,
           to: created_address.id,
           from: created_address.id,
-          bank_account: test_bank_account_id,
+          bank_account: verified_bank_account.id,
           amount: 42
         }, %{
           "Idempotency-Key" => idempotency_key
@@ -163,7 +178,7 @@ defmodule Lob.CheckTest do
           description: "Duplicated Check",
           to: created_address.id,
           from: created_address.id,
-          bank_account: test_bank_account_id,
+          bank_account: verified_bank_account.id,
           amount: 42
         }, %{
           "Idempotency-Key" => idempotency_key
@@ -176,15 +191,16 @@ defmodule Lob.CheckTest do
 
   describe "delete/2" do
 
-    test "deletes a check", %{sample_address: sample_address, test_bank_account_id: test_bank_account_id, sample_check: sample_check} do
+    test "deletes a check", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
       {:ok, created_address, _headers} = Address.create(sample_address)
+      {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
       {:ok, created_check, _headers} =
         Check.create(%{
           description: sample_check.description,
           to: created_address.id,
           from: created_address.id,
-          bank_account: test_bank_account_id,
+          bank_account: verified_bank_account.id,
           amount: 42
         })
 
@@ -193,6 +209,14 @@ defmodule Lob.CheckTest do
         assert deleted_check.deleted == true
     end
 
+  end
+
+  defp create_and_verify_bank_account(payload) do
+    payload
+    |> BankAccount.create
+    |> elem(1)
+    |> Map.get(:id)
+    |> BankAccount.verify(%{amounts: [12, 34]})
   end
 
 end
