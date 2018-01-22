@@ -213,7 +213,7 @@ defmodule Lob.CheckTest do
 
   defp create_and_verify_bank_account(payload) do
     payload
-    |> BankAccount.create
+    |> BankAccount.create()
     |> elem(1)
     |> Map.get(:id)
     |> BankAccount.verify(%{amounts: [12, 34]})
