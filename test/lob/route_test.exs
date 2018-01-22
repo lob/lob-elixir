@@ -14,9 +14,9 @@ defmodule Lob.RouteTest do
     end
 
     test "lists routes with multiple zips" do
-      zip_codes = [first_zip | [second_zip]] = ["94107", "94158"]
+      zip_codes = [first_zip, second_zip] = ["94107", "94158"]
 
-      {:ok, %{data: [first_route | [second_route | _t]]} = routes, _headers} = Route.list(%{zip_codes: zip_codes})
+      {:ok, %{data: [first_route, second_route | _t]} = routes, _headers} = Route.list(%{zip_codes: zip_codes})
       assert routes.object == "list"
       assert first_route.zip_code == first_zip
       assert second_route.zip_code == second_zip
