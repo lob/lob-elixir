@@ -1,6 +1,7 @@
 defmodule Lob.PostcardTest do
   use ExUnit.Case
 
+  alias Lob.Address
   alias Lob.Postcard
 
   setup do
@@ -20,9 +21,7 @@ defmodule Lob.PostcardTest do
       back: "<h1>Sample postcard back</h1>"
     }
 
-    # TODO(anthony): Once address API is added to wrapper, replace this ID with a created address
     %{
-      test_address_id: "adr_a7d78be7f746a0a7",
       sample_address: sample_address,
       sample_postcard: sample_postcard
     }
@@ -54,11 +53,13 @@ defmodule Lob.PostcardTest do
 
   describe "retrieve/2" do
 
-    test "retrieves a postcard", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "retrieves a postcard", %{sample_address: sample_address, sample_postcard: sample_postcard} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
       {:ok, created_postcard, _headers} =
         Postcard.create(%{
           description: sample_postcard.description,
-          to: test_address_id,
+          to: created_address.id,
           front: "https://lob.com/postcardfront.pdf",
           back: "https://lob.com/postcardback.pdf"
         })
@@ -71,11 +72,13 @@ defmodule Lob.PostcardTest do
 
   describe "create/2" do
 
-    test "creates a postcard with address_id", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "creates a postcard with address_id", %{sample_address: sample_address, sample_postcard: sample_postcard} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
       {:ok, created_postcard, headers} =
         Postcard.create(%{
           description: sample_postcard.description,
-          to: test_address_id,
+          to: created_address.id,
           front: "https://lob.com/postcardfront.pdf",
           back: sample_postcard.back
         })
@@ -97,11 +100,13 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a postcard with from address params", %{test_address_id: test_address_id, sample_postcard: sample_postcard, sample_address: sample_address} do
+    test "creates a postcard with from address params", %{sample_address: sample_address, sample_postcard: sample_postcard, sample_address: sample_address} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
       {:ok, created_postcard, headers} =
         Postcard.create(%{
           description: sample_postcard.description,
-          to: test_address_id,
+          to: created_address.id,
           from: sample_address,
           front: "https://lob.com/postcardfront.pdf",
           back: sample_postcard.back
@@ -111,11 +116,13 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a postcard with front and back as urls", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "creates a postcard with front and back as urls", %{sample_address: sample_address, sample_postcard: sample_postcard} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
       {:ok, created_postcard, headers} =
         Postcard.create(%{
           description: sample_postcard.description,
-          to: test_address_id,
+          to: created_address.id,
           front: "https://lob.com/postcardfront.pdf",
           back: "https://lob.com/postcardback.pdf"
         })
@@ -124,11 +131,13 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a postcard with front and back as PDFs", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "creates a postcard with front and back as PDFs", %{sample_address: sample_address, sample_postcard: sample_postcard} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
       {:ok, created_postcard, headers} =
         Postcard.create(%{
           description: sample_postcard.description,
-          to: test_address_id,
+          to: created_address.id,
           front: %{local_path: "test/assets/postcardfront.pdf"},
           back: %{local_path: "test/assets/postcardback.pdf"}
         })
@@ -137,13 +146,14 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a postcard with an idempotency key", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "creates a postcard with an idempotency key", %{sample_address: sample_address, sample_postcard: sample_postcard} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
       idempotency_key = UUID.uuid4()
 
       {:ok, created_postcard, _headers} =
         Postcard.create(%{
           description: sample_postcard.description,
-          to: test_address_id,
+          to: created_address.id,
           front: %{local_path: "test/assets/postcardfront.pdf"},
           back: %{local_path: "test/assets/postcardback.pdf"}
         }, %{
@@ -153,7 +163,7 @@ defmodule Lob.PostcardTest do
       {:ok, duplicated_postcard, _headers} =
         Postcard.create(%{
           description: "Duplicated Postcard",
-          to: test_address_id,
+          to: created_address.id,
           front: %{local_path: "test/assets/postcardfront.pdf"},
           back: %{local_path: "test/assets/postcardback.pdf"}
         }, %{
@@ -167,11 +177,13 @@ defmodule Lob.PostcardTest do
 
   describe "delete/2" do
 
-    test "deletes a postcard", %{test_address_id: test_address_id, sample_postcard: sample_postcard} do
+    test "deletes a postcard", %{sample_address: sample_address, sample_postcard: sample_postcard} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
       {:ok, created_postcard, _headers} =
         Postcard.create(%{
           description: sample_postcard.description,
-          to: test_address_id,
+          to: created_address.id,
           front: "https://lob.com/postcardfront.pdf",
           back: "https://lob.com/postcardback.pdf"
         })

@@ -1,6 +1,7 @@
 defmodule Lob.LetterTest do
   use ExUnit.Case
 
+  alias Lob.Address
   alias Lob.Letter
 
   setup do
@@ -19,9 +20,7 @@ defmodule Lob.LetterTest do
       description: "Library Test Letter #{DateTime.utc_now |> DateTime.to_string}"
     }
 
-    # TODO(anthony): Once address API is added to wrapper, replace this ID with a created address
     %{
-      test_address_id: "adr_a7d78be7f746a0a7",
       sample_address: sample_address,
       sample_letter: sample_letter
     }
@@ -53,12 +52,14 @@ defmodule Lob.LetterTest do
 
   describe "retrieve/2" do
 
-    test "retrieves a letter", %{test_address_id: test_address_id, sample_letter: sample_letter} do
+    test "retrieves a letter", %{sample_address: sample_address, sample_letter: sample_letter} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
       {:ok, created_letter, _headers} =
         Letter.create(%{
           description: sample_letter.description,
-          to: test_address_id,
-          from: test_address_id,
+          to: created_address.id,
+          from: created_address.id,
           color: true,
           file: "https://s3-us-west-2.amazonaws.com/lob-assets/letter-goblue.pdf"
         })
@@ -71,12 +72,14 @@ defmodule Lob.LetterTest do
 
   describe "create/2" do
 
-    test "creates a letter with address_id", %{test_address_id: test_address_id, sample_letter: sample_letter} do
+    test "creates a letter with address_id", %{sample_address: sample_address, sample_letter: sample_letter} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
       {:ok, created_letter, headers} =
         Letter.create(%{
           description: sample_letter.description,
-          to: test_address_id,
-          from: test_address_id,
+          to: created_address.id,
+          from: created_address.id,
           color: true,
           file: "https://s3-us-west-2.amazonaws.com/lob-assets/letter-goblue.pdf"
         })
@@ -99,12 +102,14 @@ defmodule Lob.LetterTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a letter with file as PDF", %{test_address_id: test_address_id, sample_letter: sample_letter} do
+    test "creates a letter with file as PDF", %{sample_address: sample_address, sample_letter: sample_letter} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
       {:ok, created_letter, headers} =
         Letter.create(%{
           description: sample_letter.description,
-          to: test_address_id,
-          from: test_address_id,
+          to: created_address.id,
+          from: created_address.id,
           color: true,
           file: %{local_path: "test/assets/8.5x11.pdf"}
         })
@@ -113,14 +118,15 @@ defmodule Lob.LetterTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a letter with an idempotency key", %{test_address_id: test_address_id, sample_letter: sample_letter} do
+    test "creates a letter with an idempotency key", %{sample_address: sample_address, sample_letter: sample_letter} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
       idempotency_key = UUID.uuid4()
 
       {:ok, created_letter, _headers} =
         Letter.create(%{
           description: sample_letter.description,
-          to: test_address_id,
-          from: test_address_id,
+          to: created_address.id,
+          from: created_address.id,
           color: true,
           file: %{local_path: "test/assets/8.5x11.pdf"}
         }, %{
@@ -130,8 +136,8 @@ defmodule Lob.LetterTest do
       {:ok, duplicated_letter, _headers} =
         Letter.create(%{
           description: "Duplicated Letter",
-          to: test_address_id,
-          from: test_address_id,
+          to: created_address.id,
+          from: created_address.id,
           color: true,
           file: %{local_path: "test/assets/8.5x11.pdf"}
         }, %{
@@ -145,12 +151,14 @@ defmodule Lob.LetterTest do
 
   describe "delete/2" do
 
-    test "deletes a letter", %{test_address_id: test_address_id, sample_letter: sample_letter} do
+    test "deletes a letter", %{sample_address: sample_address, sample_letter: sample_letter} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
       {:ok, created_letter, _headers} =
         Letter.create(%{
           description: sample_letter.description,
-          to: test_address_id,
-          from: test_address_id,
+          to: created_address.id,
+          from: created_address.id,
           color: true,
           file: %{local_path: "test/assets/8.5x11.pdf"}
         })
