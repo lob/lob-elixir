@@ -11,8 +11,8 @@ stages:
       - type: checkout
 
       - type: cache-restore
-        key: build-deps-v1-{{ checksum "mix.lock" }}
-        key: build-deps-v1-
+        key: build-deps-v2-{{ checksum "mix.lock" }}
+        key: build-deps-v2-
 
       - type: shell
         command: |
@@ -31,7 +31,7 @@ stages:
         command: mix dialyzer --halt-exit-status
 
       - type: cache-save
-        key: build-deps-v1-{{ checksum "mix.lock" }}
+        key: build-deps-v2-{{ checksum "mix.lock" }}
         paths:
           - _build
           - deps
