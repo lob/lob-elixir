@@ -62,7 +62,7 @@ defmodule Lob.AreaTest do
       {:ok, created_area, headers} =
         sample_area
         |> Map.merge(%{metadata: %{key: "value"}})
-        |> Area.create
+        |> Area.create()
 
       assert created_area.description == sample_area.description
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
@@ -77,7 +77,7 @@ defmodule Lob.AreaTest do
       {:ok, created_area, headers} =
         sample_area
         |> Map.merge(front_back_params)
-        |> Area.create
+        |> Area.create()
 
       assert created_area.description == sample_area.description
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
@@ -87,7 +87,7 @@ defmodule Lob.AreaTest do
       {:ok, created_area, headers} =
         sample_area
         |> Map.merge(%{routes: "94158-C001"})
-        |> Area.create
+        |> Area.create()
 
       assert created_area.description == sample_area.description
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
@@ -97,7 +97,7 @@ defmodule Lob.AreaTest do
       {:ok, created_area, headers} =
         sample_area
         |> Map.merge(%{routes: ["94158"]})
-        |> Area.create
+        |> Area.create()
 
       assert created_area.description == sample_area.description
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
