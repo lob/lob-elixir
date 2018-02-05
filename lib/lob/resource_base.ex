@@ -8,6 +8,8 @@ defmodule Lob.ResourceBase do
     methods = Keyword.fetch!(opts, :methods)
 
     quote do
+      @api_url "https://api.lob.com/v1"
+
       alias Lob.Util
       alias Lob.Client
 
@@ -40,7 +42,7 @@ defmodule Lob.ResourceBase do
       end
 
       @spec base_url :: String.t
-      defp base_url, do: "#{Application.get_env(:lob_elixir, :api_endpoint)}/#{unquote(endpoint)}"
+      defp base_url, do: "#{@api_url}/#{unquote(endpoint)}"
 
       @spec resource_url(String.t) :: String.t
       defp resource_url(resource_id), do: "#{base_url()}/#{resource_id}"
