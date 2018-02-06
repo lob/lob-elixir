@@ -13,7 +13,7 @@ The package is currently not available in Hex. Installation should reference the
 ```elixir
 def deps do
   [
-    {:lob_elixir, git: "https://github.com/lob/lob-elixir", tag: "v0.1.0"}
+    {:lob_elixir, git: "https://github.com/lob/lob-elixir", tag: "v0.2.0"}
   ]
 end
 ```

@@ -1,3 +1,9 @@
+### 0.2.0 (2018-02-06)
+
+##### Bug Fixes
+
+* **base-resource:**  fix api url bug ([#10](https://github.com/lob/lob-elixir/pull/10)) ([8fd919f0](https://github.com/lob/lob-elixir/commit/8fd919f0ac14aa7224f18544877c8e83792763b1))
+
 ### 0.1.0 (2018-02-02)
 
 ##### New Features
