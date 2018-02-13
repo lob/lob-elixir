@@ -9,6 +9,8 @@ defmodule Lob.Mixfile do
       preferred_cli_env: ["coveralls.html": :test],
       start_permanent: Mix.env == :prod,
       test_coverage: [tool: ExCoveralls],
+      description: "Lob Elixir Library",
+      package: package(),
       deps: deps(),
       dialyzer: [
         flags: [
@@ -37,6 +39,15 @@ defmodule Lob.Mixfile do
       {:httpoison, "~> 0.13"},
       {:poison, "~> 3.1"},
       {:uuid, "~> 1.1", only: :test}
+    ]
+  end
+
+  defp package do
+    [
+      maintainers: ["Lob"],
+      files: ["lib/**/*.ex", "mix*", "*.md"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/lob/lob-elixir"}
     ]
   end
 end
