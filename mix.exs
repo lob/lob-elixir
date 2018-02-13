@@ -5,7 +5,7 @@ defmodule Lob.Mixfile do
     [
       app: :lob_elixir,
       version: "0.2.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.4",
       preferred_cli_env: ["coveralls.html": :test],
       start_permanent: Mix.env == :prod,
       test_coverage: [tool: ExCoveralls],
@@ -16,7 +16,8 @@ defmodule Lob.Mixfile do
           :no_opaque,
           :race_conditions,
           :unknown
-        ]
+        ],
+        ignore_warnings: ".dialyzer_ignore"
       ]
     ]
   end
