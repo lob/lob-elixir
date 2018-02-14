@@ -11,12 +11,12 @@ Elixir Library for [Lob API](https://lob.com/)
 
 ## Installation
 
-The package is currently not available in Hex. Installation should reference the library repository.
+The package can be installed by adding `lob_elixir` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:lob_elixir, git: "https://github.com/lob/lob-elixir", tag: "v0.3.0"}
+    {:lob_elixir, "~> 0.3.0"}
   ]
 end
 ```
