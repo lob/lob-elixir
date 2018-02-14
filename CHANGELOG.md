@@ -1,3 +1,13 @@
+### 0.3.0 (2018-02-14)
+
+##### Chores
+
+* **mix:**  add additional properties to mixfile ([#11](https://github.com/lob/lob-elixir/pull/11)) ([4661be93](https://github.com/lob/lob-elixir/commit/4661be938d63461a84a913efe3cf7f63e81bd719))
+
+##### New Features
+
+* **travis:**  add travis ([#9](https://github.com/lob/lob-elixir/pull/9)) ([e8431c7d](https://github.com/lob/lob-elixir/commit/e8431c7d424391874887721ea6cb27d75f466087))
+
 ### 0.2.0 (2018-02-06)
 
 ##### Bug Fixes
