@@ -76,6 +76,12 @@ Here's how you can run the tests:
 
     mix test
 
+To run tests with a coverage report:
+
+    mix coveralls.html
+
+Then view the report at `cover/excoveralls.html`.
+
 =======================
 
 Copyright &copy; 2018 Lob.com
