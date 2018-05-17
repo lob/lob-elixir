@@ -1,3 +1,4 @@
 lib/lob/intl_verification.ex:6: Function resource_url/1 will never be called
+lib/lob/us_autocompletion.ex:6: Function resource_url/1 will never be called
 lib/lob/us_verification.ex:6: Function resource_url/1 will never be called
 lib/lob/us_zip_lookup.ex:6: Function resource_url/1 will never be called
