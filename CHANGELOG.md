@@ -1,3 +1,16 @@
+### 0.4.0 (2018-05-25)
+
+##### Documentation Changes
+
+* **readme:**
+  * adds configuration instructions, contributing, license (#13) ([745b7d59](https://github.com/lob/lob-elixir/commit/745b7d5980468c46156e3cf1c6004c394b296dbc))
+  * adds hex installation instructions (#12) ([cb7aa873](https://github.com/lob/lob-elixir/commit/cb7aa873e5b871c253031725424733427af84d70))
+
+##### New Features
+
+* **host:** allows custom host (#15) ([40eb659b](https://github.com/lob/lob-elixir/commit/40eb659b395f11e9b909de252c465845e5db76b9))
+* **us-autocompletions:** add USAutocompletions ([34ee871c](https://github.com/lob/lob-elixir/commit/34ee871c428d5c69be1ab646b0a30fa49ce5a2b6))
+
 ### 0.3.0 (2018-02-14)
 
 ##### Chores
