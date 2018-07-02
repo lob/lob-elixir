@@ -1,3 +1,9 @@
+#### 1.0.0 (2018-07-02)
+
+##### New Features
+
+* **areas-routes:** remove resources (fcca86a6)
+
 ### 0.4.0 (2018-05-25)
 
 ##### Documentation Changes
