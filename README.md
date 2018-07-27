@@ -1,4 +1,4 @@
-# lob_elixir (alpha)
+# lob_elixir
 
 [![Build Status](https://travis-ci.org/lob/lob-elixir.svg?branch=master)](https://travis-ci.org/lob/lob-elixir)
 [![Hex.pm](https://img.shields.io/hexpm/v/lob_elixir.svg)](https://hex.pm/packages/lob_elixir)
@@ -6,10 +6,6 @@
 [![Libraries.io for releases](https://img.shields.io/librariesio/release/hex/lob_elixir.svg)](https://libraries.io/hex/lob_elixir)
 
 Elixir library for [Lob API](https://lob.com/).
-
-### This is an ALPHA library for the Lob API.
-
-### Please reach out to support@lob.com for assistance if planning to implement this library.
 
 ## Installation
 
