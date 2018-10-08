@@ -23,7 +23,7 @@ defmodule Lob.ResourceBase do
         def list!(params \\ %{}, headers \\ %{}) do
           case list(params, headers) do
             {:ok, body, headers} -> {body, headers}
-            error -> raise to_string(error)
+            {:error, error} -> raise to_string(error)
           end
         end
       end
@@ -38,7 +38,7 @@ defmodule Lob.ResourceBase do
         def retrieve!(id, headers \\ %{}) do
           case retrieve(id, headers) do
             {:ok, body, headers} -> {body, headers}
-            error -> raise to_string(error)
+            {:error, error} -> raise to_string(error)
           end
         end
       end
@@ -49,11 +49,11 @@ defmodule Lob.ResourceBase do
           Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
         end
 
-        @spec create!(String.t, map) :: {map, list}
+        @spec create!(map, map) :: {map, list}
         def create!(data, headers \\ %{}) do
           case create(data, headers) do
             {:ok, body, headers} -> {body, headers}
-            error -> raise to_string(error)
+            {:error, error} -> raise to_string(error)
           end
         end
       end
@@ -68,7 +68,7 @@ defmodule Lob.ResourceBase do
         def delete!(id, headers \\ %{}) do
           case delete(id, headers) do
             {:ok, body, headers} -> {body, headers}
-            error -> raise to_string(error)
+            {:error, error} -> raise to_string(error)
           end
         end
       end

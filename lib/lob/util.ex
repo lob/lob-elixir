@@ -38,7 +38,7 @@ defmodule Lob.Util do
     iex> Lob.Util.build_headers(%{"Idempotency-Key" => "abc123", "Lob-Version" => "2017-11-08"})
     [{"Idempotency-Key", "abc123"}, {"Lob-Version", "2017-11-08"}]
   """
-  @spec build_headers(list({any, any})) :: HTTPoison.Base.headers
+  @spec build_headers(map) :: HTTPoison.Base.headers
   def build_headers(headers) do
     headers
     |> Enum.to_list
