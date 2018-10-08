@@ -12,15 +12,6 @@ defmodule Lob.Mixfile do
       description: "Lob Elixir Library",
       package: package(),
       deps: deps(),
-      dialyzer: [
-        flags: [
-          :error_handling,
-          :no_opaque,
-          :race_conditions,
-          :unknown
-        ],
-        ignore_warnings: ".dialyzer_ignore"
-      ]
     ]
   end
 
@@ -34,7 +25,6 @@ defmodule Lob.Mixfile do
     [
       {:bypass, "~> 0.8", only: :test},
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 0.5.1", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.7.4", only: :test},
       {:httpoison, "~> 0.13"},
       {:poison, "~> 3.1"},
