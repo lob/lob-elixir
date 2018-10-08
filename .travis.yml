@@ -18,6 +18,7 @@ script:
   - mix coveralls.travis --max-cases 1
   - mix credo
   - mix dialyzer --halt-exit-status
+  - mix format --check-formatted
 
 cache:
   directories:

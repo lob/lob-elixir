@@ -25,7 +25,7 @@ defmodule Lob.CheckTest do
     }
 
     sample_check = %{
-      description: "Library Test Check #{DateTime.utc_now |> DateTime.to_string}",
+      description: "Library Test Check #{DateTime.utc_now() |> DateTime.to_string()}",
       amount: 100
     }
 
@@ -37,7 +37,6 @@ defmodule Lob.CheckTest do
   end
 
   describe "list/2" do
-
     test "lists checks" do
       {:ok, checks, _headers} = Check.list()
       assert checks.object == "list"
@@ -57,12 +56,14 @@ defmodule Lob.CheckTest do
       {:ok, checks, _headers} = Check.list(%{metadata: %{foo: "bar"}})
       assert checks.count == 1
     end
-
   end
 
   describe "retrieve/2" do
-
-    test "retrieves a check", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
+    test "retrieves a check", %{
+      sample_address: sample_address,
+      sample_bank_account: sample_bank_account,
+      sample_check: sample_check
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
       {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
@@ -78,12 +79,14 @@ defmodule Lob.CheckTest do
       {:ok, retrieved_check, _headers} = Check.retrieve(created_check.id)
       assert retrieved_check.description == created_check.description
     end
-
   end
 
   describe "create/2" do
-
-    test "creates a check with address_id", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
+    test "creates a check with address_id", %{
+      sample_address: sample_address,
+      sample_bank_account: sample_bank_account,
+      sample_check: sample_check
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
       {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
@@ -100,7 +103,11 @@ defmodule Lob.CheckTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a check with address params", %{sample_check: sample_check, sample_bank_account: sample_bank_account, sample_address: sample_address} do
+    test "creates a check with address params", %{
+      sample_check: sample_check,
+      sample_bank_account: sample_bank_account,
+      sample_address: sample_address
+    } do
       {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
       {:ok, created_check, headers} =
@@ -116,7 +123,11 @@ defmodule Lob.CheckTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a check with logo, attachment and check bottom as URL", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
+    test "creates a check with logo, attachment and check bottom as URL", %{
+      sample_address: sample_address,
+      sample_bank_account: sample_bank_account,
+      sample_check: sample_check
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
       {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
@@ -136,7 +147,11 @@ defmodule Lob.CheckTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a check with logo as PNG and attachment and check bottom as PDF", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
+    test "creates a check with logo as PNG and attachment and check bottom as PDF", %{
+      sample_address: sample_address,
+      sample_bank_account: sample_bank_account,
+      sample_check: sample_check
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
       {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
@@ -156,42 +171,54 @@ defmodule Lob.CheckTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a check with an idempotency key", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
+    test "creates a check with an idempotency key", %{
+      sample_address: sample_address,
+      sample_bank_account: sample_bank_account,
+      sample_check: sample_check
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
       {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
       idempotency_key = UUID.uuid4()
 
       {:ok, created_check, _headers} =
-        Check.create(%{
-          description: sample_check.description,
-          to: created_address.id,
-          from: created_address.id,
-          bank_account: verified_bank_account.id,
-          amount: 42
-        }, %{
-          "Idempotency-Key" => idempotency_key
-        })
+        Check.create(
+          %{
+            description: sample_check.description,
+            to: created_address.id,
+            from: created_address.id,
+            bank_account: verified_bank_account.id,
+            amount: 42
+          },
+          %{
+            "Idempotency-Key" => idempotency_key
+          }
+        )
 
       {:ok, duplicated_postcard, _headers} =
-        Check.create(%{
-          description: "Duplicated Check",
-          to: created_address.id,
-          from: created_address.id,
-          bank_account: verified_bank_account.id,
-          amount: 42
-        }, %{
-          "Idempotency-Key" => idempotency_key
-        })
+        Check.create(
+          %{
+            description: "Duplicated Check",
+            to: created_address.id,
+            from: created_address.id,
+            bank_account: verified_bank_account.id,
+            amount: 42
+          },
+          %{
+            "Idempotency-Key" => idempotency_key
+          }
+        )
 
       assert created_check.description == duplicated_postcard.description
     end
-
   end
 
   describe "delete/2" do
-
-    test "deletes a check", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
+    test "deletes a check", %{
+      sample_address: sample_address,
+      sample_bank_account: sample_bank_account,
+      sample_check: sample_check
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
       {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
 
@@ -204,11 +231,10 @@ defmodule Lob.CheckTest do
           amount: 42
         })
 
-        {:ok, deleted_check, _headers} = Check.delete(created_check.id)
-        assert deleted_check.id == created_check.id
-        assert deleted_check.deleted == true
+      {:ok, deleted_check, _headers} = Check.delete(created_check.id)
+      assert deleted_check.id == created_check.id
+      assert deleted_check.deleted == true
     end
-
   end
 
   defp create_and_verify_bank_account(payload) do
@@ -218,5 +244,4 @@ defmodule Lob.CheckTest do
     |> Map.get(:id)
     |> BankAccount.verify(%{amounts: [12, 34]})
   end
-
 end

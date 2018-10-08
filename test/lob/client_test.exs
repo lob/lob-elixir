@@ -6,22 +6,19 @@ defmodule Lob.ClientTest do
   alias Plug.Conn
 
   setup do
-    bypass = Bypass.open
+    bypass = Bypass.open()
     {:ok, bypass: bypass}
   end
 
   describe "api_key/1" do
-
     test "raises MissingAPIKeyError if no API key is found" do
       assert_raise(MissingAPIKeyError, fn ->
         Client.api_key(nil)
       end)
     end
-
   end
 
   describe "get_request/2" do
-
     test "handles 2XX responses", %{bypass: bypass} do
       response_body = %{
         data: %{
@@ -29,11 +26,11 @@ defmodule Lob.ClientTest do
         }
       }
 
-      Bypass.expect bypass, fn conn ->
+      Bypass.expect(bypass, fn conn ->
         conn
         |> Conn.put_resp_header("HeaderKey", "HeaderValue")
         |> Conn.resp(203, Poison.encode!(response_body))
-      end
+      end)
 
       {:ok, body, headers} = Client.get_request(endpoint_url(bypass.port))
       assert response_body == body
@@ -48,9 +45,9 @@ defmodule Lob.ClientTest do
         }
       }
 
-      Bypass.expect bypass, fn conn ->
+      Bypass.expect(bypass, fn conn ->
         Conn.resp(conn, 404, Poison.encode!(response_body))
-      end
+      end)
 
       {:error, error} = Client.get_request(endpoint_url(bypass.port))
       assert error == response_body.error
@@ -61,9 +58,7 @@ defmodule Lob.ClientTest do
       {:error, %{message: error}} = Client.get_request(endpoint_url(bypass.port))
       assert error == ":econnrefused"
     end
-
   end
 
   defp endpoint_url(port), do: "http://localhost:#{port}"
-
 end

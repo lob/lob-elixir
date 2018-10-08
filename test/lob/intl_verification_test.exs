@@ -16,12 +16,9 @@ defmodule Lob.IntlVerificationTest do
   end
 
   describe "verify/2" do
-
     test "returns a 403 in test mode", %{sample_address: sample_address} do
       {:error, message} = IntlVerification.verify(sample_address)
       assert message.status_code == 403
     end
-
   end
-
 end

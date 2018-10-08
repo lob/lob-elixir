@@ -9,7 +9,7 @@ defmodule Lob.Client do
 
   use HTTPoison.Base
 
-  @client_version Mix.Project.config[:version]
+  @client_version Mix.Project.config()[:version]
 
   @type response :: {:ok, map, list} | {:error, map}
 
@@ -19,18 +19,18 @@ defmodule Lob.Client do
     """
 
     defexception message: """
-      The api_key setting is required to make requests to Lob.
-      Please configure :api_key in config.exs or set the LOB_API_KEY
-      environment variable.
+                   The api_key setting is required to make requests to Lob.
+                   Please configure :api_key in config.exs or set the LOB_API_KEY
+                   environment variable.
 
-      config :lob_elixir, api_key: API_KEY
-    """
+                   config :lob_elixir, api_key: API_KEY
+                 """
   end
 
-  @spec client_version :: String.t
+  @spec client_version :: String.t()
   def client_version, do: @client_version
 
-  @spec api_key(atom) :: String.t
+  @spec api_key(atom) :: String.t()
   def api_key(env_key \\ :api_key) do
     case Application.get_env(:lob_elixir, env_key, System.get_env("LOB_API_KEY")) || :not_found do
       :not_found -> raise MissingAPIKeyError
@@ -38,8 +38,9 @@ defmodule Lob.Client do
     end
   end
 
-  @spec api_version :: String.t | nil
-  def api_version, do: Application.get_env(:lob_elixir, :api_version, System.get_env("LOB_API_VERSION"))
+  @spec api_version :: String.t() | nil
+  def api_version,
+    do: Application.get_env(:lob_elixir, :api_version, System.get_env("LOB_API_VERSION"))
 
   # #########################
   # HTTPoison.Base callbacks
@@ -60,21 +61,21 @@ defmodule Lob.Client do
   # Client API
   # #########################
 
-  @spec get_request(String.t, HTTPoison.Base.headers) :: response
+  @spec get_request(String.t(), HTTPoison.Base.headers()) :: response
   def get_request(url, headers \\ []) do
     url
     |> get(headers, build_options())
     |> handle_response
   end
 
-  @spec post_request(String.t, {:multipart, list}, HTTPoison.Base.headers) :: response
+  @spec post_request(String.t(), {:multipart, list}, HTTPoison.Base.headers()) :: response
   def post_request(url, body, headers \\ []) do
     url
     |> post(body, headers, build_options())
     |> handle_response
   end
 
-  @spec delete_request(String.t, HTTPoison.Base.headers) :: response
+  @spec delete_request(String.t(), HTTPoison.Base.headers()) :: response
   def delete_request(url, headers \\ []) do
     url
     |> delete(headers, build_options())
@@ -85,9 +86,9 @@ defmodule Lob.Client do
   # Response handlers
   # #########################
 
-  @spec handle_response({:ok | :error, Response.t | Error.t}) :: response
+  @spec handle_response({:ok | :error, Response.t() | Error.t()}) :: response
   defp handle_response({:ok, %{body: body, headers: headers, status_code: code}})
-  when code >= 200 and code < 300 do
+       when code >= 200 and code < 300 do
     {:ok, body, headers}
   end
 
@@ -99,13 +100,17 @@ defmodule Lob.Client do
     {:error, %{message: Error.message(error)}}
   end
 
-  @spec build_options(String.t) :: Keyword.t
+  @spec build_options(String.t()) :: Keyword.t()
   defp build_options(api_key \\ api_key()) do
     [hackney: [basic_auth: {api_key, ""}]]
   end
 
-  @spec default_headers(String.t | nil) :: %{String.t => String.t}
+  @spec default_headers(String.t() | nil) :: %{String.t() => String.t()}
   defp default_headers(nil), do: %{"User-Agent" => "Lob/v1 ElixirBindings/#{client_version()}"}
-  defp default_headers(api_version), do: %{"User-Agent" => "Lob/v1 ElixirBindings/#{client_version()}", "Lob-Version" => api_version}
 
+  defp default_headers(api_version),
+    do: %{
+      "User-Agent" => "Lob/v1 ElixirBindings/#{client_version()}",
+      "Lob-Version" => api_version
+    }
 end
