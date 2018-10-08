@@ -18,12 +18,28 @@ defmodule Lob.ResourceBase do
         def list(params \\ %{}, headers \\ %{}) do
           Client.get_request("#{base_url()}?#{Util.build_query_string(params)}" , Util.build_headers(headers))
         end
+
+        @spec list!(map, map) :: {map, list}
+        def list!(params \\ %{}, headers \\ %{}) do
+          case list(params, headers) do
+            {:ok, body, headers} -> {body, headers}
+            error -> raise to_string(error)
+          end
+        end
       end
 
       if :retrieve in unquote(methods) do
         @spec retrieve(String.t, map) :: Client.response
         def retrieve(id, headers \\ %{}) do
           Client.get_request(resource_url(id), Util.build_headers(headers))
+        end
+
+        @spec retrieve!(map, map) :: {map, list}
+        def retrieve!(id \\ %{}, headers \\ %{}) do
+          case retrieve(id, headers) do
+            {:ok, body, headers} -> {body, headers}
+            error -> raise to_string(error)
+          end
         end
       end
 
@@ -32,12 +48,28 @@ defmodule Lob.ResourceBase do
         def create(data, headers \\ %{}) do
           Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
         end
+
+        @spec create!(map, map) :: {map, list}
+        def create!(data \\ %{}, headers \\ %{}) do
+          case create(data, headers) do
+            {:ok, body, headers} -> {body, headers}
+            error -> raise to_string(error)
+          end
+        end
       end
 
       if :delete in unquote(methods) do
         @spec delete(String.t, map) :: Client.response
         def delete(id, headers \\ %{}) do
           Client.delete_request(resource_url(id), Util.build_headers(headers))
+        end
+
+        @spec delete!(map, map) :: {map, list}
+        def delete!(id \\ %{}, headers \\ %{}) do
+          case delete(id, headers) do
+            {:ok, body, headers} -> {body, headers}
+            error -> raise to_string(error)
+          end
         end
       end
 
