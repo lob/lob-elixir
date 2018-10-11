@@ -39,8 +39,9 @@ defmodule Lob.Client do
   end
 
   @spec api_version :: String.t() | nil
-  def api_version,
-    do: Application.get_env(:lob_elixir, :api_version, System.get_env("LOB_API_VERSION"))
+  def api_version do
+    Application.get_env(:lob_elixir, :api_version, System.get_env("LOB_API_VERSION"))
+  end
 
   # #########################
   # HTTPoison.Base callbacks
@@ -108,9 +109,10 @@ defmodule Lob.Client do
   @spec default_headers(String.t() | nil) :: %{String.t() => String.t()}
   defp default_headers(nil), do: %{"User-Agent" => "Lob/v1 ElixirBindings/#{client_version()}"}
 
-  defp default_headers(api_version),
-    do: %{
+  defp default_headers(api_version) do
+    %{
       "User-Agent" => "Lob/v1 ElixirBindings/#{client_version()}",
       "Lob-Version" => api_version
     }
+  end
 end
