@@ -19,7 +19,7 @@ defmodule Lob.ResourceBase do
           Client.get_request("#{base_url()}?#{Util.build_query_string(params)}" , Util.build_headers(headers))
         end
 
-        @spec list!(map, map) :: {map, list}
+        @spec list!(map, map) :: {map, list} | no_return
         def list!(params \\ %{}, headers \\ %{}) do
           case list(params, headers) do
             {:ok, body, headers} -> {body, headers}
@@ -34,7 +34,7 @@ defmodule Lob.ResourceBase do
           Client.get_request(resource_url(id), Util.build_headers(headers))
         end
 
-        @spec retrieve!(String.t, map) :: {map, list}
+        @spec retrieve!(String.t, map) :: {map, list} | no_return
         def retrieve!(id, headers \\ %{}) do
           case retrieve(id, headers) do
             {:ok, body, headers} -> {body, headers}
@@ -49,7 +49,7 @@ defmodule Lob.ResourceBase do
           Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
         end
 
-        @spec create!(map, map) :: {map, list}
+        @spec create!(map, map) :: {map, list} | no_return
         def create!(data, headers \\ %{}) do
           case create(data, headers) do
             {:ok, body, headers} -> {body, headers}
@@ -64,7 +64,7 @@ defmodule Lob.ResourceBase do
           Client.delete_request(resource_url(id), Util.build_headers(headers))
         end
 
-        @spec delete!(String.t, map) :: {map, list}
+        @spec delete!(String.t, map) :: {map, list} | no_return
         def delete!(id, headers \\ %{}) do
           case delete(id, headers) do
             {:ok, body, headers} -> {body, headers}
