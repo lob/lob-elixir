@@ -61,7 +61,7 @@ defmodule Lob.LetterTest do
           to: created_address.id,
           from: created_address.id,
           color: true,
-          file: "https://s3-us-west-2.amazonaws.com/lob-assets/letter-goblue.pdf"
+          file: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/us_letter_1pg.pdf"
         })
 
       {:ok, retrieved_letter, _headers} = Letter.retrieve(created_letter.id)
@@ -81,7 +81,7 @@ defmodule Lob.LetterTest do
           to: created_address.id,
           from: created_address.id,
           color: true,
-          file: "https://s3-us-west-2.amazonaws.com/lob-assets/letter-goblue.pdf"
+          file: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/us_letter_1pg.pdf"
         })
 
       assert created_letter.description == sample_letter.description
@@ -95,7 +95,7 @@ defmodule Lob.LetterTest do
           to: sample_address,
           from: sample_address,
           color: true,
-          file: "https://s3-us-west-2.amazonaws.com/lob-assets/letter-goblue.pdf"
+          file: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/us_letter_1pg.pdf"
         })
 
       assert created_letter.description == sample_letter.description
