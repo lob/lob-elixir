@@ -127,9 +127,9 @@ defmodule Lob.CheckTest do
           from: created_address.id,
           bank_account: verified_bank_account.id,
           amount: 42,
-          logo: "http://via.placeholder.com/100x100",
-          check_bottom: "https://s3-us-west-2.amazonaws.com/lob-assets/letter-goblue.pdf",
-          attachment: "https://s3-us-west-2.amazonaws.com/lob-assets/letter-goblue.pdf"
+          logo: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/check_logo.png",
+          check_bottom: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/us_letter_1pg.pdf",
+          attachment: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/us_letter_1pg.pdf"
         })
 
       assert created_check.description == sample_check.description
