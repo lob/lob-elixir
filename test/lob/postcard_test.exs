@@ -60,8 +60,8 @@ defmodule Lob.PostcardTest do
         Postcard.create(%{
           description: sample_postcard.description,
           to: created_address.id,
-          front: "https://lob.com/postcardfront.pdf",
-          back: "https://lob.com/postcardback.pdf"
+          front: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/pc_4x6_front.pdf",
+          back: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/pc_4x6_back.pdf"
         })
 
       {:ok, retrieved_postcard, _headers} = Postcard.retrieve(created_postcard.id)
@@ -79,7 +79,7 @@ defmodule Lob.PostcardTest do
         Postcard.create(%{
           description: sample_postcard.description,
           to: created_address.id,
-          front: "https://lob.com/postcardfront.pdf",
+          front: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/pc_4x6_front.pdf",
           back: sample_postcard.back
         })
 
@@ -92,7 +92,7 @@ defmodule Lob.PostcardTest do
         Postcard.create(%{
           description: sample_postcard.description,
           to: sample_address,
-          front: "https://lob.com/postcardfront.pdf",
+          front: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/pc_4x6_front.pdf",
           back: sample_postcard.back
         })
 
@@ -108,7 +108,7 @@ defmodule Lob.PostcardTest do
           description: sample_postcard.description,
           to: created_address.id,
           from: sample_address,
-          front: "https://lob.com/postcardfront.pdf",
+          front: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/pc_4x6_front.pdf",
           back: sample_postcard.back
         })
 
@@ -123,8 +123,8 @@ defmodule Lob.PostcardTest do
         Postcard.create(%{
           description: sample_postcard.description,
           to: created_address.id,
-          front: "https://lob.com/postcardfront.pdf",
-          back: "https://lob.com/postcardback.pdf"
+          front: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/pc_4x6_front.pdf",
+          back: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/pc_4x6_back.pdf"
         })
 
       assert created_postcard.description == sample_postcard.description
@@ -184,8 +184,8 @@ defmodule Lob.PostcardTest do
         Postcard.create(%{
           description: sample_postcard.description,
           to: created_address.id,
-          front: "https://lob.com/postcardfront.pdf",
-          back: "https://lob.com/postcardback.pdf"
+          front: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/pc_4x6_front.pdf",
+          back: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/pc_4x6_back.pdf"
         })
 
         {:ok, deleted_postcard, _headers} = Postcard.delete(created_postcard.id)
