@@ -101,7 +101,7 @@ defmodule Lob.Client do
 
   @spec build_options(String.t) :: Keyword.t
   defp build_options(api_key \\ api_key()) do
-    [hackney: [basic_auth: {api_key, ""}]]
+    [hackney: [basic_auth: {api_key, ""}], recv_timeout: :infinity]
   end
 
   @spec default_headers(String.t | nil) :: %{String.t => String.t}
