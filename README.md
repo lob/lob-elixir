@@ -14,7 +14,7 @@ The package can be installed by adding `lob_elixir` to your list of dependencies
 ```elixir
 def deps do
   [
-    {:lob_elixir, "~> 1.0.0"}
+    {:lob_elixir, "~> 1.1.0"}
   ]
 end
 ```

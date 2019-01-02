@@ -1,3 +1,20 @@
+### 1.1.0 (2019-01-02)
+
+##### Chores
+
+* **assets:**
+  *  update more links ([b06c9a6f](https://github.com/lob/lob-elixir/commit/b06c9a6fda90fa889d39d2ed9a2d035e89b45c55))
+  *  update links ([abada639](https://github.com/lob/lob-elixir/commit/abada6390905fa0871f5d3ad9b367bc811b9b876))
+
+##### Documentation Changes
+
+* **readme:**  remove alpha label ([#17](https://github.com/lob/lob-elixir/pull/17)) ([36c172a2](https://github.com/lob/lob-elixir/commit/36c172a262d57dbfb9c68e92ebc369ecc60b451e))
+
+##### New Features
+
+* **client:**  removes HTTP response timeout ([#23](https://github.com/lob/lob-elixir/pull/23)) ([46f0e4e3](https://github.com/lob/lob-elixir/commit/46f0e4e3378311841fb65e344b48063a7eb1c084))
+* **bang-methods:**  add bang methods to resource base module ([#18](https://github.com/lob/lob-elixir/pull/18)) ([6fa3db46](https://github.com/lob/lob-elixir/commit/6fa3db46a87ac8fd12cb7f5f2cb6ec1e8ced68a3))
+
 #### 1.0.0 (2018-07-02)
 
 ##### New Features
