@@ -13,9 +13,14 @@ defmodule Lob.ClientTest do
   describe "api_key/1" do
 
     test "raises MissingAPIKeyError if no API key is found" do
+
       assert_raise(MissingAPIKeyError, fn ->
+        api_key = System.get_env("LOB_API_KEY")
+        System.delete_env("LOB_API_KEY")
         Client.api_key(nil)
+        System.put_env("LOB_API_KEY", api_key)
       end)
+
     end
 
   end

@@ -70,11 +70,11 @@ Tests are written using [ExUnit](https://hexdocs.pm/ex_unit/ExUnit.html), Elixir
 
 Here's how you can run the tests:
 
-    mix test
+    LOB_API_KEY=YOUR_TEST_API_KEY mix test
 
 To run tests with a coverage report:
 
-    mix coveralls.html
+    LOB_API_KEY=YOUR_TEST_API_KEY mix coveralls.html
 
 Then view the report at `cover/excoveralls.html`.
 
