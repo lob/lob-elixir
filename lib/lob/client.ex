@@ -82,7 +82,7 @@ defmodule Lob.Client do
   end
 
   defp handle_response({:ok, %{body: body}}) do
-    {:error, body.error}
+    {:error, process_response_body(body).error}
   end
 
   defp handle_response({:error, error = %Error{}}) do
