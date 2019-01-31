@@ -14,7 +14,7 @@ defmodule Lob.ResourceBase do
       alias Lob.Client
 
       if :list in unquote(methods) do
-        @spec list(map, map) :: Client.response
+        @spec list(map, map) :: Client.client_response
         def list(params \\ %{}, headers \\ %{}) do
           Client.get_request("#{base_url()}?#{Util.build_query_string(params)}" , Util.build_headers(headers))
         end
@@ -29,7 +29,7 @@ defmodule Lob.ResourceBase do
       end
 
       if :retrieve in unquote(methods) do
-        @spec retrieve(String.t, map) :: Client.response
+        @spec retrieve(String.t, map) :: Client.client_response
         def retrieve(id, headers \\ %{}) do
           Client.get_request(resource_url(id), Util.build_headers(headers))
         end
@@ -44,7 +44,7 @@ defmodule Lob.ResourceBase do
       end
 
       if :create in unquote(methods) do
-        @spec create(map, map) :: Client.response
+        @spec create(map, map) :: Client.client_response
         def create(data, headers \\ %{}) do
           Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
         end
@@ -59,7 +59,7 @@ defmodule Lob.ResourceBase do
       end
 
       if :delete in unquote(methods) do
-        @spec delete(String.t, map) :: Client.response
+        @spec delete(String.t, map) :: Client.client_response
         def delete(id, headers \\ %{}) do
           Client.delete_request(resource_url(id), Util.build_headers(headers))
         end

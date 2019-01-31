@@ -11,7 +11,7 @@ defmodule Lob.Client do
 
   @client_version Mix.Project.config[:version]
 
-  @type response :: {:ok, map, list} | {:error, map}
+  @type client_response :: {:ok, map, list} | {:error, map}
 
   defmodule MissingAPIKeyError do
     @moduledoc """
@@ -60,21 +60,21 @@ defmodule Lob.Client do
   # Client API
   # #########################
 
-  @spec get_request(String.t, HTTPoison.Base.headers) :: response
+  @spec get_request(String.t, HTTPoison.Base.headers) :: client_response
   def get_request(url, headers \\ []) do
     url
     |> get(headers, build_options())
     |> handle_response
   end
 
-  @spec post_request(String.t, {:multipart, list}, HTTPoison.Base.headers) :: response
+  @spec post_request(String.t, {:multipart, list}, HTTPoison.Base.headers) :: client_response
   def post_request(url, body, headers \\ []) do
     url
     |> post(body, headers, build_options())
     |> handle_response
   end
 
-  @spec delete_request(String.t, HTTPoison.Base.headers) :: response
+  @spec delete_request(String.t, HTTPoison.Base.headers) :: client_response
   def delete_request(url, headers \\ []) do
     url
     |> delete(headers, build_options())
@@ -85,7 +85,7 @@ defmodule Lob.Client do
   # Response handlers
   # #########################
 
-  @spec handle_response({:ok | :error, Response.t | Error.t}) :: response
+  @spec handle_response({:ok | :error, Response.t | Error.t}) :: client_response
   defp handle_response({:ok, %{body: body, headers: headers, status_code: code}})
   when code >= 200 and code < 300 do
     {:ok, body, headers}
