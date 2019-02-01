@@ -1,3 +1,10 @@
+#### 1.1.1 (2019-02-01)
+
+##### Chores
+
+* **httpoison:**  upgrades to v1.x, renames response type ([#28](https://github.com/lob/lob-elixir/pull/28)) ([63cb7519](https://github.com/lob/lob-elixir/commit/63cb7519d72757de3e1a98d7100583302ea0edf0))
+* **tests:**  remove key from test config ([#24](https://github.com/lob/lob-elixir/pull/24)) ([e772c8eb](https://github.com/lob/lob-elixir/commit/e772c8eb01a8e7cf08decdd6d52f2cde157bdb31))
+
 ### 1.1.0 (2019-01-02)
 
 ##### Chores
