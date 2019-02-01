@@ -5,7 +5,7 @@ defmodule Lob.USZipLookup do
 
   use Lob.ResourceBase, endpoint: "us_zip_lookups", methods: []
 
-  @spec lookup(map, map) :: Client.response
+  @spec lookup(map, map) :: Client.client_response
   def lookup(data, headers \\ %{}) do
     Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
   end
