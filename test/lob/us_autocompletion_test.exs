@@ -4,7 +4,6 @@ defmodule Lob.USAutocompletionTest do
   alias Lob.USAutocompletion
 
   describe "autocomplete/2" do
-
     test "autocompletes a US Address" do
       payload = %{
         address_prefix: "185 BER",
@@ -21,7 +20,5 @@ defmodule Lob.USAutocompletionTest do
       assert result.suggestions |> List.first() |> Map.get(:primary_line) ==
                "TEST KEYS DO NOT AUTOCOMPLETE US ADDRESSES"
     end
-
   end
-
 end

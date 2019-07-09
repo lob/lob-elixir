@@ -7,7 +7,7 @@ defmodule Lob.Mixfile do
       version: "1.1.1",
       elixir: "~> 1.4",
       preferred_cli_env: ["coveralls.html": :test],
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
       description: "Lob Elixir Library",
       package: package(),

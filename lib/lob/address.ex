@@ -4,5 +4,4 @@ defmodule Lob.Address do
   """
 
   use Lob.ResourceBase, endpoint: "addresses", methods: [:create, :retrieve, :list, :delete]
-
 end

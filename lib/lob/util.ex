@@ -10,7 +10,7 @@ defmodule Lob.Util do
     iex> Lob.Util.build_query_string(%{count: 1, include: ["total_count"], metadata: %{name: "Larry"}})
     "count=1&include%5B%5D=total_count&metadata%5Bname%5D=Larry"
   """
-  @spec build_query_string(map) :: String.t
+  @spec build_query_string(map) :: String.t()
   def build_query_string(params) when is_map(params) do
     params
     |> Enum.reduce([], &(&2 ++ transform_argument(&1)))
@@ -38,10 +38,10 @@ defmodule Lob.Util do
     iex> Lob.Util.build_headers(%{"Idempotency-Key" => "abc123", "Lob-Version" => "2017-11-08"})
     [{"Idempotency-Key", "abc123"}, {"Lob-Version", "2017-11-08"}]
   """
-  @spec build_headers(map) :: HTTPoison.Base.headers
+  @spec build_headers(map) :: HTTPoison.Base.headers()
   def build_headers(headers) do
     headers
-    |> Enum.to_list
+    |> Enum.to_list()
     |> Enum.map(fn {k, v} -> {to_string(k), to_string(v)} end)
   end
 

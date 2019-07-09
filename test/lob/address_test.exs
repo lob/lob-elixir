@@ -19,7 +19,6 @@ defmodule Lob.AddressTest do
   end
 
   describe "list/2" do
-
     test "lists addresses" do
       {:ok, addresses, _headers} = Address.list()
       assert addresses.object == "list"
@@ -39,22 +38,18 @@ defmodule Lob.AddressTest do
       {:ok, addresses, _headers} = Address.list(%{metadata: %{foo: "bar"}})
       assert addresses.count == 1
     end
-
   end
 
   describe "retrieve/2" do
-
     test "retrieves an address", %{sample_address: sample_address} do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, retrieved_address, _headers} = Address.retrieve(created_address.id)
       assert retrieved_address.name == created_address.name
     end
-
   end
 
   describe "create/2" do
-
     test "creates an address", %{sample_address: sample_address} do
       {:ok, created_address, headers} = Address.create(sample_address)
 
@@ -66,16 +61,14 @@ defmodule Lob.AddressTest do
       {:ok, created_address, headers} =
         sample_address
         |> Map.merge(%{metadata: %{key: "value"}})
-        |> Address.create
+        |> Address.create()
 
       assert created_address.name == String.upcase(sample_address.name)
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
-
   end
 
   describe "delete/2" do
-
     test "deletes an address", %{sample_address: sample_address} do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
@@ -83,7 +76,5 @@ defmodule Lob.AddressTest do
       assert deleted_address.id == created_address.id
       assert deleted_address.deleted == true
     end
-
   end
-
 end
