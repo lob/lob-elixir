@@ -16,4 +16,5 @@ Make sure you have Elixir 1.4 or greater installed. Copy and paste the following
 4. Push to the branch (`git push origin my-new-feature`).
 5. Make sure the tests pass (`mix coveralls.html`).
 6. Open up `cover/excoveralls.html` in your browser and add tests if required to meet the minimum coverage threshold.
-7. Create new Pull Request.
+7. Make sure the code is formatted (`mix format`).
+8. Create new Pull Request.
