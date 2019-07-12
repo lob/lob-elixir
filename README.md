@@ -80,6 +80,6 @@ Then view the report at `cover/excoveralls.html`.
 
 =======================
 
-Copyright &copy; 2018 Lob.com
+Copyright &copy; 2019 Lob.com
 
 Released under the MIT License, which can be found in the repository in [`LICENSE.txt`](LICENSE.txt).
