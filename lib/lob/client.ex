@@ -32,7 +32,7 @@ defmodule Lob.Client do
 
   @spec api_key(atom) :: String.t
   def api_key(env_key \\ :api_key) do
-    case Application.get_env(:lob_elixir, env_key, System.get_env("LOB_API_KEY")) || :not_found do
+    case Confex.get_env(:lob_elixir, env_key, System.get_env("LOB_API_KEY")) || :not_found do
       :not_found -> raise MissingAPIKeyError
       value -> value
     end

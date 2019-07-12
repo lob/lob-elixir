@@ -36,6 +36,14 @@ config :lob_elixir,
   api_key: "your_api_key"
 ```
 
+The `{:system, "ENV_VAR"}` syntax is also supported, allowing the API key to be fetched at runtime. For example, if the API key is stored in an environment variable named `LOB_KEY`, the library could be configured with:
+
+```elixir
+# Configuring an API key with configs
+config :lob_elixir,
+  api_key: {:system, "LOB_KEY"}
+```
+
 Similarly, the library allows users to optionally configure the API version through the `:api_version` config. If that is not present, it will look for the `LOB_API_VERSION` environment variable.
 
 ```elixir
@@ -80,6 +88,6 @@ Then view the report at `cover/excoveralls.html`.
 
 =======================
 
-Copyright &copy; 2018 Lob.com
+Copyright &copy; 2019 Lob.com
 
 Released under the MIT License, which can be found in the repository in [`LICENSE.txt`](LICENSE.txt).
