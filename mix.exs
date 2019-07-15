@@ -7,7 +7,7 @@ defmodule Lob.Mixfile do
       version: "1.1.1",
       elixir: "~> 1.4",
       preferred_cli_env: ["coveralls.html": :test],
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
       description: "Lob Elixir Library",
       package: package(),
@@ -33,6 +33,7 @@ defmodule Lob.Mixfile do
   defp deps do
     [
       {:bypass, "~> 0.8", only: :test},
+      {:confex, "~> 3.4.0"},
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5.1", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.7.4", only: :test},
