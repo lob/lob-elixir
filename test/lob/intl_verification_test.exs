@@ -15,7 +15,7 @@ defmodule Lob.IntlVerificationTest do
   describe "verify/2" do
 
     test "returns a dummy response in test mode", %{sample_address: sample_address} do
-      {:ok, response, _headers} =  = IntlVerification.verify(sample_address)
+      {:ok, response, _headers} = IntlVerification.verify(sample_address)
       assert response.primary_line == "370 WATER ST"
       assert response.deliverability == "deliverable"
     end
