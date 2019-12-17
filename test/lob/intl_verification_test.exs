@@ -6,10 +6,7 @@ defmodule Lob.IntlVerificationTest do
   setup do
     %{
       sample_address: %{
-        primary_line: "123 Test St",
-        city: "HEARST",
-        state: "ONTARIO",
-        postal_code: "P0L1N0",
+        primary_line: "deliverable",
         country: "CA"
       }
     }
@@ -17,9 +14,10 @@ defmodule Lob.IntlVerificationTest do
 
   describe "verify/2" do
 
-    test "returns a 403 in test mode", %{sample_address: sample_address} do
-      {:error, message} = IntlVerification.verify(sample_address)
-      assert message.status_code == 403
+    test "returns a dummy response in test mode", %{sample_address: sample_address} do
+      response = IntlVerification.verify(sample_address)
+      assert response.primary_line == "370 WATER ST"
+      assert response.deliverability == "deliverable"
     end
 
   end
