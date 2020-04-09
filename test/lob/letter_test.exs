@@ -147,6 +147,28 @@ defmodule Lob.LetterTest do
       assert created_letter.description == duplicated_letter.description
     end
 
+    test "creates a letter with a merge variable object", %{sample_address: sample_address, sample_letter: sample_letter} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
+      {:ok, created_letter, headers} =
+        Letter.create(%{
+          description: sample_letter.description,
+          to: created_address.id,
+          from: created_address.id,
+          color: true,
+          file: "<html>{{data.name}}</html>",
+          merge_variables: %{
+            data: %{
+              name: "Donald"
+            }
+          }
+        })
+
+      assert created_letter.description == sample_letter.description
+      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+    end
+
+
   end
 
   describe "delete/2" do

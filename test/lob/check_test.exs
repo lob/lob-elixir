@@ -187,6 +187,27 @@ defmodule Lob.CheckTest do
       assert created_check.description == duplicated_postcard.description
     end
 
+    test "creates a check with a merge variable conditional", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+      {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
+
+      {:ok, created_check, headers} =
+        Check.create(%{
+          description: sample_check.description,
+          to: created_address.id,
+          from: created_address.id,
+          bank_account: verified_bank_account.id,
+          amount: 42,
+          attachment: "<html>{{#is_awesome}}You are awesome!{{/is_awesome}}</html>",
+          merge_variables: %{
+            is_awesome: true
+          }
+        })
+
+      assert created_check.description == sample_check.description
+      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+    end
+
   end
 
   describe "delete/2" do

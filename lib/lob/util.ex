@@ -46,6 +46,14 @@ defmodule Lob.Util do
   end
 
   @spec transform_argument({any, any}) :: list
+  defp transform_argument({:merge_variables, v}) do
+    [{"merge_variables", Poison.encode!(v)}]
+  end
+
+  defp transform_argument({"merge_variables", v}) do
+    [{"merge_variables", Poison.encode!(v)}]
+  end
+
   defp transform_argument({k, v}) when is_list(v) do
     Enum.map(v, fn e ->
       {"#{to_string(k)}[]", to_string(e)}
