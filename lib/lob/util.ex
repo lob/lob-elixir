@@ -46,12 +46,10 @@ defmodule Lob.Util do
   end
 
   @spec transform_argument({any, any}) :: list
-  defp transform_argument({:merge_variables, v}) do
-    [{"merge_variables", Poison.encode!(v)}]
-  end
+  defp transform_argument({:merge_variables, v}), do: transform_argument({"merge_variables", v})
 
   defp transform_argument({"merge_variables", v}) do
-    [{"merge_variables", Poison.encode!(v)}]
+    [{"merge_variables", Poison.encode!(v), [{"Content-Type", "application/json"}]}]
   end
 
   defp transform_argument({k, v}) when is_list(v) do
