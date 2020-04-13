@@ -173,6 +173,31 @@ defmodule Lob.PostcardTest do
       assert created_postcard.description == duplicated_postcard.description
     end
 
+    test "creates a postcard with a merge variable list", %{sample_address: sample_address, sample_postcard: sample_postcard} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
+      {:ok, created_postcard, headers} =
+        Postcard.create(%{
+          description: sample_postcard.description,
+          to: created_address.id,
+          front: "<html>{{#list}} {{name}} {{/list}}</html>",
+          back: sample_postcard.back,
+          merge_variables: %{
+            list: [
+              %{
+                name: "Larissa"
+              },
+              %{
+                name: "Larry"
+              }
+            ]
+          }
+        })
+
+      assert created_postcard.description == sample_postcard.description
+      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+    end
+
   end
 
   describe "delete/2" do
