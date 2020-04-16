@@ -1,3 +1,20 @@
+#### 1.1.2 (2020-04-16)
+
+##### Chores
+
+* **template-syntax:**  allow nested merge variables ([#35](https://github.com/lob/lob-elixir/pull/35)) ([a28fc527](https://github.com/lob/lob-elixir/commit/a28fc52757372f08941cf646684aee924eb92872))
+* **docs:**
+  *  updates copyright year to 2020 ([#34](https://github.com/lob/lob-elixir/pull/34)) ([e876385a](https://github.com/lob/lob-elixir/commit/e876385a94955e5b7195ac1dc75ebab0a53892dc))
+  *  updates copyright year to 2019 ([#30](https://github.com/lob/lob-elixir/pull/30)) ([79b53779](https://github.com/lob/lob-elixir/commit/79b53779ad0b500db899283bd83ab9cbe09973e8))
+
+##### New Features
+
+* **config:**  support runtime config with Confex ([#31](https://github.com/lob/lob-elixir/pull/31)) ([b107dd2d](https://github.com/lob/lob-elixir/commit/b107dd2da7ce8dee4e1de403d0cf91c0b642a783))
+
+##### Bug Fixes
+
+* **intl-verification:**  updated tests in elixir library ([#33](https://github.com/lob/lob-elixir/pull/33)) ([b1bacd56](https://github.com/lob/lob-elixir/commit/b1bacd56fd3a1752cdbda4614354b3120cbc0841))
+
 #### 1.1.1 (2019-02-01)
 
 ##### Chores
