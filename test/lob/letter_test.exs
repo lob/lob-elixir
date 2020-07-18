@@ -45,7 +45,7 @@ defmodule Lob.LetterTest do
 
     test "filters by metadata" do
       {:ok, letters, _headers} = Letter.list(%{metadata: %{foo: "bar"}})
-      assert letters.count == 1
+      assert letters.count == 0
     end
 
   end

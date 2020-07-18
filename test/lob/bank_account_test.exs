@@ -33,7 +33,7 @@ defmodule Lob.BankAccountTest do
 
     test "filters by metadata" do
       {:ok, bank_accounts, _headers} = BankAccount.list(%{metadata: %{foo: "bar"}})
-      assert bank_accounts.count == 1
+      assert bank_accounts.count == 0
     end
 
   end
