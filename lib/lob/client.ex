@@ -53,7 +53,7 @@ defmodule Lob.Client do
   end
 
   def process_response_body(body) do
-    Parser.parse!(body, keys: :atoms)
+    Parser.parse!(body, %{keys: :atoms})
   end
 
   # #########################
