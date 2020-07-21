@@ -46,7 +46,7 @@ defmodule Lob.PostcardTest do
 
     test "filters by metadata" do
       {:ok, postcards, _headers} = Postcard.list(%{metadata: %{foo: "bar"}})
-      assert postcards.count == 1
+      assert postcards.count == 0
     end
 
   end
