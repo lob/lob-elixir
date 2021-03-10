@@ -7,8 +7,10 @@ defmodule Lob.Util do
   Transforms a map of request params to a URL encoded query string.
 
   ## Example
-    iex> Lob.Util.build_query_string(%{count: 1, include: ["total_count"], metadata: %{name: "Larry"}})
-    "count=1&include%5B%5D=total_count&metadata%5Bname%5D=Larry"
+
+      iex> Lob.Util.build_query_string(%{count: 1, include: ["total_count"], metadata: %{name: "Larry"}})
+      "count=1&include%5B%5D=total_count&metadata%5Bname%5D=Larry"
+
   """
   @spec build_query_string(map) :: String.t
   def build_query_string(params) when is_map(params) do
@@ -22,8 +24,10 @@ defmodule Lob.Util do
   multipart request body.
 
   ## Example
-    iex> Lob.Util.build_body(%{description: "body", to: %{name: "Larry", species: "Lobster"}, front: %{local_path: "a/b/c"}})
-    {:multipart, [{"description", "body"}, {:file, "a/b/c", {"form-data", [name: "front", filename: "a/b/c"]}, []}, {"to[name]", "Larry"}, {"to[species]", "Lobster"}]}
+
+      iex> Lob.Util.build_body(%{description: "body", to: %{name: "Larry", species: "Lobster"}, front: %{local_path: "a/b/c"}})
+      {:multipart, [{"description", "body"}, {:file, "a/b/c", {"form-data", [name: "front", filename: "a/b/c"]}, []}, {"to[name]", "Larry"}, {"to[species]", "Lobster"}]}
+
   """
   @spec build_body(map) :: {:multipart, list}
   def build_body(body) when is_map(body) do
@@ -35,8 +39,10 @@ defmodule Lob.Util do
   as request headers.
 
   ## Example
-    iex> Lob.Util.build_headers(%{"Idempotency-Key" => "abc123", "Lob-Version" => "2017-11-08"})
-    [{"Idempotency-Key", "abc123"}, {"Lob-Version", "2017-11-08"}]
+
+      iex> Lob.Util.build_headers(%{"Idempotency-Key" => "abc123", "Lob-Version" => "2017-11-08"})
+      [{"Idempotency-Key", "abc123"}, {"Lob-Version", "2017-11-08"}]
+
   """
   @spec build_headers(map) :: HTTPoison.Base.headers
   def build_headers(headers) do

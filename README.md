@@ -1,15 +1,18 @@
 # lob_elixir
 
 [![Build Status](https://travis-ci.org/lob/lob-elixir.svg?branch=master)](https://travis-ci.org/lob/lob-elixir)
-[![Hex.pm](https://img.shields.io/hexpm/v/lob_elixir.svg)](https://hex.pm/packages/lob_elixir)
 [![Coverage Status](https://coveralls.io/repos/github/lob/lob-elixir/badge.svg?branch=master)](https://coveralls.io/github/lob/lob-elixir?branch=master)
-[![Libraries.io for releases](https://img.shields.io/librariesio/release/hex/lob_elixir.svg)](https://libraries.io/hex/lob_elixir)
+[![Module Version](https://img.shields.io/hexpm/v/lob_elixir.svg)](https://hex.pm/packages/lob_elixir)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/lob_elixir/)
+[![Total Download](https://img.shields.io/hexpm/dt/lob_elixir.svg)](https://hex.pm/packages/lob_elixir)
+[![License](https://img.shields.io/hexpm/l/lob_elixir.svg)](https://github.com/lob/lob_elixir/blob/master/LICENSE)
+[![Last Updated](https://img.shields.io/github/last-commit/lob/lob-elixir.svg)](https://github.com/lob/lob-elixir/commits/master)
 
 Elixir library for [Lob API](https://lob.com/).
 
 ## Installation
 
-The package can be installed by adding `lob_elixir` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `:lob_elixir` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -68,10 +71,6 @@ Requests return a 2-tuple or 3-tuple, depending on the response.
 {:error, %{message: "postcard not found", status_code: 404}} = Postcard.retrieve('nonexistent_resource')
 ```
 
-## Contributing
-
-To contribute, please see the [`CONTRIBUTING.md`](CONTRIBUTING.md) file.
-
 ## Testing
 
 Tests are written using [ExUnit](https://hexdocs.pm/ex_unit/ExUnit.html), Elixir's built-in test framework.
@@ -86,8 +85,8 @@ To run tests with a coverage report:
 
 Then view the report at `cover/excoveralls.html`.
 
-=======================
+## Copyright and License
 
-Copyright &copy; 2020 Lob.com
+Copyright (c) 2019 Lob.com
 
-Released under the MIT License, which can be found in the repository in [`LICENSE.txt`](LICENSE.txt).
+Released under the MIT License, which can be found in the repository in [`LICENSE.txt`](https://github.com/lob/lob-elixir/blob/master/LICENSE).
