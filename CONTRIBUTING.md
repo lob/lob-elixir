@@ -8,7 +8,7 @@ Make sure you have Elixir 1.4 or greater installed. Copy and paste the following
     cd lob-elixir
     mix deps.get
 
-## Contributing Instructions
+## Instructions
 
 1. Fork repo.
 2. Create your feature branch (`git checkout -b my-new-feature`).
