@@ -37,8 +37,8 @@ defmodule Lob.Mixfile do
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5.1", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.7.4", only: :test},
-      {:httpoison, "~> 1.0"},
-      {:poison, "~> 3.1"},
+      {:httpoison, "~> 1.8"},
+      {:poison, "~> 4.0"},
       {:uuid, "~> 1.1", only: :test}
     ]
   end

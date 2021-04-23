@@ -44,11 +44,6 @@ defmodule Lob.PostcardTest do
       assert postcards.count == 2
     end
 
-    test "filters by metadata" do
-      {:ok, postcards, _headers} = Postcard.list(%{metadata: %{foo: "bar"}})
-      assert postcards.count == 1
-    end
-
   end
 
   describe "retrieve/2" do
@@ -100,7 +95,7 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a postcard with from address params", %{sample_address: sample_address, sample_postcard: sample_postcard, sample_address: sample_address} do
+    test "creates a postcard with from address params", %{sample_address: sample_address, sample_postcard: sample_postcard} do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_postcard, headers} =
