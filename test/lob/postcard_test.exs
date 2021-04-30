@@ -100,7 +100,7 @@ defmodule Lob.PostcardTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a postcard with from address params", %{sample_address: sample_address, sample_postcard: sample_postcard, sample_address: sample_address} do
+    test "creates a postcard with from address params", %{sample_address: sample_address, sample_postcard: sample_postcard} do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_postcard, headers} =
