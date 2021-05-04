@@ -4,7 +4,7 @@ defmodule Lob.Mixfile do
   def project do
     [
       app: :lob_elixir,
-      version: "1.1.2",
+      version: "1.2.0",
       elixir: "~> 1.4",
       preferred_cli_env: ["coveralls.html": :test],
       start_permanent: Mix.env() == :prod,

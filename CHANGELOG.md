@@ -1,3 +1,9 @@
+#### 1.2.0 (2021-05-04)
+
+##### New Features
+
+* **self-mailers:**  Add support for Self Mailers ([#31](https://github.com/lob/lob-elixir/pull/31)) ([b107dd2d](https://github.com/lob/lob-elixir/commit/b107dd2da7ce8dee4e1de403d0cf91c0b642a783))
+
 #### 1.1.2 (2020-04-16)
 
 ##### Chores
