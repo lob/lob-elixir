@@ -53,11 +53,6 @@ defmodule Lob.CheckTest do
       assert checks.count == 2
     end
 
-    test "filters by metadata" do
-      {:ok, checks, _headers} = Check.list(%{metadata: %{foo: "bar"}})
-      assert checks.count == 1
-    end
-
   end
 
   describe "retrieve/2" do

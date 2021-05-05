@@ -31,11 +31,6 @@ defmodule Lob.BankAccountTest do
       assert bank_accounts.count == 2
     end
 
-    test "filters by metadata" do
-      {:ok, bank_accounts, _headers} = BankAccount.list(%{metadata: %{foo: "bar"}})
-      assert bank_accounts.count == 1
-    end
-
   end
 
   describe "retrieve/2" do

@@ -35,11 +35,6 @@ defmodule Lob.AddressTest do
       assert addresses.count == 2
     end
 
-    test "filters by metadata" do
-      {:ok, addresses, _headers} = Address.list(%{metadata: %{foo: "bar"}})
-      assert addresses.count == 1
-    end
-
   end
 
   describe "retrieve/2" do
