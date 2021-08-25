@@ -1,3 +1,9 @@
+#### 1.3.0 (2021-08-25)
+
+##### New Features
+
+* **bulk-verification:**  Add support for US & International Bulk Verification ([#43](https://github.com/lob/lob-elixir/pull/43)) ([](https://github.com/lob/lob-elixir/commit/))
+
 #### 1.2.0 (2021-05-04)
 
 ##### New Features
