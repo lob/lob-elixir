@@ -39,6 +39,7 @@ defmodule Lob.Mixfile do
       {:excoveralls, "~> 0.7.4", only: :test},
       {:httpoison, "~> 1.0"},
       {:poison, "~> 3.1"},
+      {:plug_cowboy, "~> 2.0"},
       {:uuid, "~> 1.1", only: :test}
     ]
   end
