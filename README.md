@@ -21,7 +21,7 @@ end
 
 ## Getting Started
 
-This library implements the Lob API. Please read through the official [API Documentation](#api-documentation) to get a complete sense of what to expect from each endpoint.
+This library implements the Lob API. Please read through the official [API Documentation](https://docs.lob.com/) to get a complete sense of what to expect from each endpoint.
 
 ### Registration
 
