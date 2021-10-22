@@ -52,6 +52,7 @@ defmodule Lob.Client do
     |> Enum.into([])
   end
 
+  @spec process_response_body(iodata() | binary()) :: Parser.t() | no_return()
   def process_response_body(body) do
     Parser.parse!(body, keys: :atoms)
   end
