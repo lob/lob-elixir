@@ -11,7 +11,7 @@ defmodule Lob.Client do
 
   @client_version Mix.Project.config[:version]
 
-  @type client_response :: {:ok, map, list} | {:error, map}
+  @type client_response :: {:ok, map, list} | {:error, any}
 
   defmodule MissingAPIKeyError do
     @moduledoc """
@@ -19,12 +19,12 @@ defmodule Lob.Client do
     """
 
     defexception message: """
-      The api_key setting is required to make requests to Lob.
-      Please configure :api_key in config.exs or set the LOB_API_KEY
-      environment variable.
+                   The api_key setting is required to make requests to Lob.
+                   Please configure :api_key in config.exs or set the LOB_API_KEY
+                   environment variable.
 
-      config :lob_elixir, api_key: API_KEY
-    """
+                   config :lob_elixir, api_key: API_KEY
+                 """
   end
 
   @spec client_version :: String.t
@@ -39,7 +39,8 @@ defmodule Lob.Client do
   end
 
   @spec api_version :: String.t | nil
-  def api_version, do: Application.get_env(:lob_elixir, :api_version, System.get_env("LOB_API_VERSION"))
+  def api_version,
+    do: Application.get_env(:lob_elixir, :api_version, System.get_env("LOB_API_VERSION"))
 
   # #########################
   # HTTPoison.Base callbacks
@@ -52,9 +53,8 @@ defmodule Lob.Client do
     |> Enum.into([])
   end
 
-  @spec process_response_body(iodata() | binary()) :: Parser.t() | no_return()
   def process_response_body(body) do
-    Parser.parse!(body, keys: :atoms)
+    Parser.parse!(body, %{keys: :atoms})
   end
 
   # #########################
@@ -86,9 +86,9 @@ defmodule Lob.Client do
   # Response handlers
   # #########################
 
-  @spec handle_response({:ok | :error, Response.t | Error.t}) :: client_response
+  @spec handle_response({:ok, map} | {:error, Error.t}) :: client_response
   defp handle_response({:ok, %{body: body, headers: headers, status_code: code}})
-  when code >= 200 and code < 300 do
+       when code >= 200 and code < 300 do
     {:ok, body, headers}
   end
 
@@ -107,6 +107,10 @@ defmodule Lob.Client do
 
   @spec default_headers(String.t | nil) :: %{String.t => String.t}
   defp default_headers(nil), do: %{"User-Agent" => "Lob/v1 ElixirBindings/#{client_version()}"}
-  defp default_headers(api_version), do: %{"User-Agent" => "Lob/v1 ElixirBindings/#{client_version()}", "Lob-Version" => api_version}
 
+  defp default_headers(api_version),
+    do: %{
+      "User-Agent" => "Lob/v1 ElixirBindings/#{client_version()}",
+      "Lob-Version" => api_version
+    }
 end

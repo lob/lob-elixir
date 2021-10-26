@@ -5,7 +5,7 @@ defmodule Lob.BulkUSVerification do
 
   use Lob.ResourceBase, endpoint: "bulk/us_verifications", methods: []
 
-  @spec verify(map, map) :: Client.client_response
+  @spec verify(map, map) :: Client.client_response | no_return
   def verify(data, headers \\ %{"Content-type": "application/json"}) do
     Client.post_request(base_url(), Poison.encode!(data), Util.build_headers(headers))
   end
