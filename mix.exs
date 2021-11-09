@@ -11,6 +11,7 @@ defmodule Lob.Mixfile do
       test_coverage: [tool: ExCoveralls],
       description: "Lob Elixir Library",
       package: package(),
+      docs: docs(),
       deps: deps(),
       dialyzer: [
         flags: [
@@ -40,16 +41,26 @@ defmodule Lob.Mixfile do
       {:httpoison, "~> 1.0"},
       {:poison, "~> 3.1"},
       {:plug_cowboy, "~> 2.0"},
-      {:uuid, "~> 1.1", only: :test}
+      {:uuid, "~> 1.1", only: :test},
+      {:ex_doc, ">= 0.0.0", only: [:dev], runtime: false}
     ]
   end
 
+  defp docs do
+    [
+      extras: [{:"README.md", title: "Overview"}],
+      main: "readme"
+    ]
+  end
   defp package do
     [
       maintainers: ["Lob"],
       files: ["lib/**/*.ex", "mix*", "*.md"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/lob/lob-elixir"}
+      links: %{
+        "GitHub" => "https://github.com/lob/lob-elixir",
+        "API Documentation" => "https://docs.lob.com/"
+      }
     ]
   end
 end
