@@ -11,6 +11,7 @@ defmodule Lob.Mixfile do
       test_coverage: [tool: ExCoveralls],
       description: "Lob Elixir Library",
       package: package(),
+      docs: docs(),
       deps: deps(),
       dialyzer: [
         flags: [
@@ -44,12 +45,21 @@ defmodule Lob.Mixfile do
     ]
   end
 
+  defp docs do
+    [
+      extras: [{:"README.md", title: "Overview"}],
+      main: "readme"
+    ]
+  end
   defp package do
     [
       maintainers: ["Lob"],
       files: ["lib/**/*.ex", "mix*", "*.md"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/lob/lob-elixir"}
+      links: %{
+        "GitHub" => "https://github.com/lob/lob-elixir",
+        "API Documentation" => "https://docs.lob.com/"
+      }
     ]
   end
 end
