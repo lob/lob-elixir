@@ -4,8 +4,8 @@ defmodule Lob.Mixfile do
   def project do
     [
       app: :lob_elixir,
-      version: "1.4.0",
-      elixir: "~> 1.4",
+      version: "1.5.0",
+      elixir: "~> 1.12",
       preferred_cli_env: ["coveralls.html": :test],
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
@@ -33,16 +33,15 @@ defmodule Lob.Mixfile do
 
   defp deps do
     [
-      {:bypass, "~> 0.8", only: :test},
-      {:confex, "~> 3.4.0"},
-      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 0.5.1", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.7.4", only: :test},
-      {:httpoison, "~> 1.0"},
-      {:poison, "~> 3.1"},
-      {:plug_cowboy, "~> 2.0"},
-      {:uuid, "~> 1.1", only: :test},
-      {:ex_doc, ">= 0.0.0", only: [:dev], runtime: false}
+      {:bypass, "~> 2.1", only: :test},
+      {:confex, "~> 3.5.0"},
+      {:credo, "~> 1.5.6", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.14", only: :test},
+      {:httpoison, "~> 1.8"},
+      {:poison, "~> 5.0"},
+      {:plug_cowboy, "~> 2.5"},
+      {:uuid, "~> 1.1", only: :test}
     ]
   end
 

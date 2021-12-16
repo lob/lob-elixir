@@ -14,7 +14,7 @@ The package can be installed by adding `lob_elixir` to your list of dependencies
 ```elixir
 def deps do
   [
-    {:lob_elixir, "~> 1.3.0"}
+    {:lob_elixir, "~> 1.5.0"}
   ]
 end
 ```
@@ -88,6 +88,6 @@ Then view the report at `cover/excoveralls.html`.
 
 =======================
 
-Copyright &copy; 2020 Lob.com
+Copyright &copy; 2021 Lob.com
 
 Released under the MIT License, which can be found in the repository in [`LICENSE.txt`](LICENSE.txt).
