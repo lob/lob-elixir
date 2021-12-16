@@ -38,14 +38,14 @@ defmodule Lob.Util do
     iex> Lob.Util.build_headers(%{"Idempotency-Key" => "abc123", "Lob-Version" => "2017-11-08"})
     [{"Idempotency-Key", "abc123"}, {"Lob-Version", "2017-11-08"}]
   """
-  @spec build_headers(map) :: HTTPoison.Base.headers
+  @spec build_headers(map) :: [{String.t, String.t}]
   def build_headers(headers) do
     headers
     |> Enum.to_list
     |> Enum.map(fn {k, v} -> {to_string(k), to_string(v)} end)
   end
 
-  @spec transform_argument({any, any}) :: list
+  @spec transform_argument({any, any}) :: list | no_return
   defp transform_argument({:merge_variables, v}), do: transform_argument({"merge_variables", v})
 
   defp transform_argument({"merge_variables", v}) do
