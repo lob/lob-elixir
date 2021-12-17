@@ -13,7 +13,10 @@ defmodule Lob.AddressTest do
         address_city: "San Francisco",
         address_state: "CA",
         address_country: "US",
-        address_zip: "94107"
+        address_zip: "94107",
+        metadata: %{
+          foo: "bar"
+        }
       }
     }
   end
@@ -35,9 +38,15 @@ defmodule Lob.AddressTest do
       assert addresses.count == 2
     end
 
-    test "filters by metadata" do
+    test "filters by metadata", %{sample_address: sample_address} do
+      {:ok, created_address, _headers} =
+        sample_address
+        |> Map.merge(%{metadata: %{foo: "bar"}})
+        |> Address.create
+
       {:ok, addresses, _headers} = Address.list(%{metadata: %{foo: "bar"}})
-      assert addresses.count == 1
+      assert addresses.count > 0
+      Address.delete(created_address.id)
     end
 
   end

@@ -17,7 +17,7 @@ defmodule Lob.LetterTest do
     }
 
     sample_letter = %{
-      description: "Library Test Letter #{DateTime.utc_now |> DateTime.to_string}"
+      description: "Library Test Letter #{DateTime.utc_now |> DateTime.to_string}",
     }
 
     %{
@@ -43,9 +43,26 @@ defmodule Lob.LetterTest do
       assert letters.count == 2
     end
 
-    test "filters by metadata" do
+    test "filters by metadata", %{sample_address: sample_address} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+
+      {:ok, created_letter, _headers} =
+        Letter.create(%{
+          description: "Letter with metadata",
+          to: created_address.id,
+          from: created_address.id,
+          color: true,
+          file: "<html>{{data.name}}</html>",
+          metadata: %{foo: "bar"},
+          merge_variables: %{
+            data: %{
+              name: "Donald"
+            }
+          }
+        })
       {:ok, letters, _headers} = Letter.list(%{metadata: %{foo: "bar"}})
-      assert letters.count == 1
+      assert letters.count > 0
+      Letter.delete(created_letter.id)
     end
 
   end

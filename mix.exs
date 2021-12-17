@@ -21,6 +21,11 @@ defmodule Lob.Mixfile do
           :unknown
         ],
         ignore_warnings: ".dialyzer_ignore"
+      ],
+      xref: [
+        exclude: [
+          :crypto
+        ]
       ]
     ]
   end
@@ -39,7 +44,9 @@ defmodule Lob.Mixfile do
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.14", only: :test},
       {:httpoison, "~> 1.8"},
+      {:json, "~> 1.4"},
       {:poison, "~> 5.0"},
+      {:pre_commit, "~> 0.3.4", only: :dev},
       {:plug_cowboy, "~> 2.5"},
       {:uuid, "~> 1.1", only: :test}
     ]

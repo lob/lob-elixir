@@ -9,7 +9,8 @@ defmodule Lob.BankAccountTest do
         routing_number: "122100024",
         account_number: "123456789",
         account_type: "company",
-        signatory: "John Doe"
+        signatory: "John Doe",
+        metadata: %{foo: "bar"}
       }
     }
   end
@@ -31,9 +32,12 @@ defmodule Lob.BankAccountTest do
       assert bank_accounts.count == 2
     end
 
-    test "filters by metadata" do
+    test "filters by metadata", %{sample_bank_account: sample_bank_account} do
+      {:ok, created_bank_account, _headers} = BankAccount.create(sample_bank_account)
+
       {:ok, bank_accounts, _headers} = BankAccount.list(%{metadata: %{foo: "bar"}})
-      assert bank_accounts.count == 1
+      assert bank_accounts.count > 0
+      BankAccount.delete(created_bank_account.id)
     end
 
   end

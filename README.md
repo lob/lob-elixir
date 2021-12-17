@@ -28,7 +28,7 @@ This library implements the Lob API. Please read through the official [API Docum
 The library requires a valid Lob API key to work properly. To acquire an API key, first create an account at [Lob.com](https://dashboard.lob.com/#/register). Once you have created an account, you can access your API Keys from the [Settings Panel](https://dashboard.lob.com/#/settings).
 
 ### API Key Configuration
- The library will by default refer to the `:api_key` config when making authenticated requests. If that is not present, it will look for the `LOB_API_KEY` environment variable.
+ The library will by default refer to the `:api_key` config when making authenticated requests. If that is not present, it will look for the `API_KEY` environment variable.
 
 ```elixir
 # Configuring an API key with configs
@@ -78,11 +78,11 @@ Tests are written using [ExUnit](https://hexdocs.pm/ex_unit/ExUnit.html), Elixir
 
 Here's how you can run the tests:
 
-    LOB_API_KEY=YOUR_TEST_API_KEY mix test
+    API_KEY=YOUR_TEST_API_KEY mix test
 
 To run tests with a coverage report:
 
-    LOB_API_KEY=YOUR_TEST_API_KEY mix coveralls.html
+    API_KEY=YOUR_TEST_API_KEY mix coveralls.html
 
 Then view the report at `cover/excoveralls.html`.
 

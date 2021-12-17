@@ -26,7 +26,7 @@ defmodule Lob.CheckTest do
 
     sample_check = %{
       description: "Library Test Check #{DateTime.utc_now |> DateTime.to_string}",
-      amount: 100
+      amount: 100,
     }
 
     %{
@@ -53,9 +53,22 @@ defmodule Lob.CheckTest do
       assert checks.count == 2
     end
 
-    test "filters by metadata" do
+    test "filters by metadata", %{sample_address: sample_address, sample_bank_account: sample_bank_account, sample_check: sample_check} do
+      {:ok, created_address, _headers} = Address.create(sample_address)
+      {:ok, verified_bank_account, _headers} = create_and_verify_bank_account(sample_bank_account)
+
+      {:ok, created_check, _headers} =
+        Check.create(%{
+          description: sample_check.description,
+          to: created_address.id,
+          from: created_address.id,
+          bank_account: verified_bank_account.id,
+          amount: 1312,
+          metadata: %{foo: "bar"}
+        })
       {:ok, checks, _headers} = Check.list(%{metadata: %{foo: "bar"}})
-      assert checks.count == 1
+      assert checks.count > 0
+      Check.delete(created_check.id)
     end
 
   end
