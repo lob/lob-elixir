@@ -44,9 +44,18 @@ defmodule Lob.PostcardTest do
       assert postcards.count == 2
     end
 
-    test "filters by metadata" do
+    test "filters by metadata", %{sample_address: sample_address} do
+      {:ok, created_postcard, _headers} = Postcard.create(%{
+        to: sample_address,
+        from: sample_address,
+        description: "Library Test Postcard #{DateTime.utc_now |> DateTime.to_string}",
+        front: "<h1>Sample postcard back</h1>",
+        back: "<h1>Sample postcard back</h1>",
+        metadata: %{foo: "bar"}
+      })
       {:ok, postcards, _headers} = Postcard.list(%{metadata: %{foo: "bar"}})
-      assert postcards.count == 1
+      assert postcards.count > 0
+      Postcard.delete(created_postcard.id)
     end
 
   end

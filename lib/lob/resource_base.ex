@@ -10,8 +10,8 @@ defmodule Lob.ResourceBase do
     quote do
       @default_api_host "https://api.lob.com/v1"
 
-      alias Lob.Util
       alias Lob.Client
+      alias Lob.Util
 
       if :list in unquote(methods) do
         @spec list(map, map) :: Client.client_response
@@ -73,14 +73,20 @@ defmodule Lob.ResourceBase do
         end
       end
 
-      @spec base_url :: String.t
-      defp base_url, do: "#{api_host()}/#{unquote(endpoint)}"
+      @spec base_url :: <<_::64, _::_*8>>
+      defp base_url do
+        "#{api_host()}/#{unquote(endpoint)}"
+      end
 
-      @spec api_host :: String.t
-      defp api_host, do: Application.get_env(:lob_elixir, :api_host, @default_api_host)
+      @spec api_host :: <<_::64, _::_*8>>
+      defp api_host do
+        "#{Application.get_env(:lob_elixir, :api_host, @default_api_host)}"
+      end
 
-      @spec resource_url(String.t) :: String.t
-      defp resource_url(resource_id), do: "#{base_url()}/#{resource_id}"
+      @spec resource_url(String.t) :: <<_::64, _::_*8>>
+      defp resource_url(resource_id) do
+        "#{base_url()}/#{resource_id}"
+      end
     end
 
   end

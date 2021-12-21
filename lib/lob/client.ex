@@ -3,9 +3,8 @@ defmodule Lob.Client do
   Client responsible for making requests to Lob and handling the responses.
   """
 
-  alias Poison.Parser
   alias HTTPoison.Error
-  alias HTTPoison.Response
+  alias Poison.Parser
 
   use HTTPoison.Base
 
@@ -20,7 +19,7 @@ defmodule Lob.Client do
 
     defexception message: """
                    The api_key setting is required to make requests to Lob.
-                   Please configure :api_key in config.exs or set the LOB_API_KEY
+                   Please configure :api_key in config.exs or set the API_KEY
                    environment variable.
 
                    config :lob_elixir, api_key: API_KEY
@@ -32,7 +31,7 @@ defmodule Lob.Client do
 
   @spec api_key(atom) :: String.t
   def api_key(env_key \\ :api_key) do
-    case Confex.get_env(:lob_elixir, env_key, System.get_env("LOB_API_KEY")) || :not_found do
+    case Confex.get_env(:lob_elixir, env_key, System.get_env("API_KEY")) || :not_found do
       :not_found -> raise MissingAPIKeyError
       value -> value
     end
@@ -68,8 +67,15 @@ defmodule Lob.Client do
     |> handle_response
   end
 
-  @spec post_request(String.t, {:multipart, list}, HTTPoison.Base.headers) :: client_response
+  @spec post_request(<<_::64, _::_*8>>, {:multipart, [any()]}, [{binary(), binary()}]) :: client_response
   def post_request(url, body, headers \\ []) do
+    url
+    |> post(body, headers, build_options())
+    |> handle_response
+  end
+
+  @spec post_request_binary(<<_::64, _::_*8>>, binary(), [{binary(), binary()}]) :: client_response
+  def post_request_binary(url, body, headers \\ []) do
     url
     |> post(body, headers, build_options())
     |> handle_response

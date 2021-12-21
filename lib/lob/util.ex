@@ -27,7 +27,8 @@ defmodule Lob.Util do
   """
   @spec build_body(map) :: {:multipart, list}
   def build_body(body) when is_map(body) do
-    {:multipart, Enum.reduce(body, [], &(&2 ++ transform_argument(&1)))}
+    result = {:multipart, Enum.reduce(body, [], &(&2 ++ transform_argument(&1)))}
+    result
   end
 
   @doc """
