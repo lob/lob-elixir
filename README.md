@@ -1,15 +1,18 @@
 # lob_elixir
 
 [![Build Status](https://travis-ci.org/lob/lob-elixir.svg?branch=master)](https://travis-ci.org/lob/lob-elixir)
-[![Hex.pm](https://img.shields.io/hexpm/v/lob_elixir.svg)](https://hex.pm/packages/lob_elixir)
 [![Coverage Status](https://coveralls.io/repos/github/lob/lob-elixir/badge.svg?branch=master)](https://coveralls.io/github/lob/lob-elixir?branch=master)
-[![Libraries.io for releases](https://img.shields.io/librariesio/release/hex/lob_elixir.svg)](https://libraries.io/hex/lob_elixir)
+[![Module Version](https://img.shields.io/hexpm/v/lob_elixir.svg)](https://hex.pm/packages/lob_elixir)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/lob_elixir/)
+[![Total Download](https://img.shields.io/hexpm/dt/lob_elixir.svg)](https://hex.pm/packages/lob_elixir)
+[![License](https://img.shields.io/hexpm/l/lob_elixir.svg)](https://github.com/lob/lob_elixir/blob/master/LICENSE)
+[![Last Updated](https://img.shields.io/github/last-commit/lob/lob-elixir.svg)](https://github.com/lob/lob-elixir/commits/master)
 
 Elixir library for [Lob API](https://lob.com/).
 
 ## Installation
 
-The package can be installed by adding `lob_elixir` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `:lob_elixir` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do

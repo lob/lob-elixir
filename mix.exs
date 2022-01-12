@@ -1,10 +1,13 @@
 defmodule Lob.Mixfile do
   use Mix.Project
 
+  @source_url "https://github.com/lob/lob-elixir"
+  @version "1.5.0"
+
   def project do
     [
       app: :lob_elixir,
-      version: "1.5.0",
+      version: @version,
       elixir: "~> 1.12",
       preferred_cli_env: ["coveralls.html": :test],
       start_permanent: Mix.env() == :prod,
@@ -42,6 +45,7 @@ defmodule Lob.Mixfile do
       {:confex, "~> 3.5.0"},
       {:credo, "~> 1.5.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:ex_doc, ">= 0.0.0", only: [:dev], runtime: false},
       {:excoveralls, "~> 0.14", only: :test},
       {:httpoison, "~> 1.8"},
       {:json, "~> 1.4"},
@@ -55,16 +59,21 @@ defmodule Lob.Mixfile do
   defp docs do
     [
       extras: [{:"README.md", title: "Overview"}],
-      main: "readme"
+      main: "readme",
+      source_url: @source_url,
+      source_ref: "v#{@version}",
+      formatters: ["html"]
     ]
   end
   defp package do
     [
+      description: "Lob Elixir Library",
       maintainers: ["Lob"],
-      files: ["lib/**/*.ex", "mix*", "*.md"],
+      files: ["lib/**/*.ex", "mix*", "*.md", "LICENSE.txt"],
       licenses: ["MIT"],
       links: %{
-        "GitHub" => "https://github.com/lob/lob-elixir",
+        "Changelog" => "https://hexdocs.pm/lob_elixir/changelog.html",
+        "GitHub" => @source_url,
         "API Documentation" => "https://docs.lob.com/"
       }
     ]
