@@ -5,10 +5,6 @@ on:
     types: [ opened, reopened, edited ]
     branches:
       - master
-  push:
-    branches:
-      - add_github_action
-  workflow_dispatch:
 jobs:
   elixir_workflow:
     runs-on: ubuntu-latest
