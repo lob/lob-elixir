@@ -1,0 +1,37 @@
+name: Run full Elixir workflow
+
+on:
+  pull_request_target:
+    types: [labeled]
+jobs:
+  elixir_workflow:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'Approved')
+    strategy:
+      matrix:
+        elixir-version: ['1.12']
+        otp: ['22.0']
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        otp-version: '22.0'
+        elixir-version: '1.12'
+    - name: Install Dependencies
+      run: mix deps.get
+    - name: Compile Repository
+      run: mix compile --warnings-as-errors
+    - name: Check Code Coverage & Upload to Coveralls.io
+      run:  MIX_ENV=test mix coveralls.github --max-cases 1
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Run Static Code Analysis for Elixir
+      run: mix credo
+    - name: Run Static Code Analysis for Erlang
+      run: mix dialyzer --halt-exit-status
+    - name: Run Elixir Tests
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
+      run: mix deps.get && mix test
