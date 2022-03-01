@@ -4,12 +4,10 @@ defmodule Lob.BulkIntlVerification do
   """
 
   use Lob.ResourceBase, endpoint: "bulk/intl_verifications", methods: []
-  @spec verify(map, map) :: Client.client_response
+  @spec verify(map, map) :: Client.client_response()
   def verify(data, headers \\ %{"Content-type": "application/json"}) do
-    with {:ok, encoded_data} <- Poison.encode(data)
-    do
+    with {:ok, encoded_data} <- Poison.encode(data) do
       Client.post_request_binary(base_url(), encoded_data, Util.build_headers(headers))
     end
   end
-
 end

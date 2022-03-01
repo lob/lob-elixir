@@ -4,5 +4,4 @@ defmodule Lob.Check do
   """
 
   use Lob.ResourceBase, endpoint: "checks", methods: [:create, :retrieve, :list, :delete]
-
 end

@@ -16,7 +16,6 @@ defmodule Lob.BankAccountTest do
   end
 
   describe "list/2" do
-
     test "lists bank accounts" do
       {:ok, bank_accounts, _headers} = BankAccount.list()
       assert bank_accounts.object == "list"
@@ -39,22 +38,18 @@ defmodule Lob.BankAccountTest do
       assert bank_accounts.count > 0
       BankAccount.delete(created_bank_account.id)
     end
-
   end
 
   describe "retrieve/2" do
-
     test "retrieves a bank account", %{sample_bank_account: sample_bank_account} do
       {:ok, created_bank_account, _headers} = BankAccount.create(sample_bank_account)
 
       {:ok, retrieved_bank_account, _headers} = BankAccount.retrieve(created_bank_account.id)
       assert retrieved_bank_account.account_number == created_bank_account.account_number
     end
-
   end
 
   describe "create/2" do
-
     test "creates a bank account", %{sample_bank_account: sample_bank_account} do
       {:ok, created_bank_account, headers} = BankAccount.create(sample_bank_account)
 
@@ -66,16 +61,14 @@ defmodule Lob.BankAccountTest do
       {:ok, created_bank_account, headers} =
         sample_bank_account
         |> Map.merge(%{metadata: %{key: "value"}})
-        |> BankAccount.create
+        |> BankAccount.create()
 
       assert created_bank_account.account_number == sample_bank_account.account_number
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
-
   end
 
   describe "delete/2" do
-
     test "deletes a bank account", %{sample_bank_account: sample_bank_account} do
       {:ok, created_bank_account, _headers} = BankAccount.create(sample_bank_account)
 
@@ -83,19 +76,17 @@ defmodule Lob.BankAccountTest do
       assert deleted_bank_account.id == created_bank_account.id
       assert deleted_bank_account.deleted == true
     end
-
   end
 
   describe "verify/3" do
-
     test "verifies a bank account", %{sample_bank_account: sample_bank_account} do
       {:ok, created_bank_account, _headers} = BankAccount.create(sample_bank_account)
 
-      {:ok, verified_bank_account, _headers} = BankAccount.verify(created_bank_account.id, %{amounts: [12, 34]})
+      {:ok, verified_bank_account, _headers} =
+        BankAccount.verify(created_bank_account.id, %{amounts: [12, 34]})
+
       assert created_bank_account.id == verified_bank_account.id
       assert verified_bank_account.verified == true
     end
-
   end
-
 end

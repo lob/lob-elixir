@@ -17,7 +17,7 @@ defmodule Lob.LetterTest do
     }
 
     sample_letter = %{
-      description: "Library Test Letter #{DateTime.utc_now |> DateTime.to_string}",
+      description: "Library Test Letter #{DateTime.utc_now() |> DateTime.to_string()}"
     }
 
     %{
@@ -27,7 +27,6 @@ defmodule Lob.LetterTest do
   end
 
   describe "list/2" do
-
     test "lists letters" do
       {:ok, letters, _headers} = Letter.list()
       assert letters.object == "list"
@@ -60,15 +59,14 @@ defmodule Lob.LetterTest do
             }
           }
         })
+
       {:ok, letters, _headers} = Letter.list(%{metadata: %{foo: "bar"}})
       assert letters.count > 0
       Letter.delete(created_letter.id)
     end
-
   end
 
   describe "retrieve/2" do
-
     test "retrieves a letter", %{sample_address: sample_address, sample_letter: sample_letter} do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
@@ -84,12 +82,13 @@ defmodule Lob.LetterTest do
       {:ok, retrieved_letter, _headers} = Letter.retrieve(created_letter.id)
       assert retrieved_letter.description == created_letter.description
     end
-
   end
 
   describe "create/2" do
-
-    test "creates a letter with address_id", %{sample_address: sample_address, sample_letter: sample_letter} do
+    test "creates a letter with address_id", %{
+      sample_address: sample_address,
+      sample_letter: sample_letter
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_letter, headers} =
@@ -105,7 +104,10 @@ defmodule Lob.LetterTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a letter with address params", %{sample_letter: sample_letter, sample_address: sample_address} do
+    test "creates a letter with address params", %{
+      sample_letter: sample_letter,
+      sample_address: sample_address
+    } do
       {:ok, created_letter, headers} =
         Letter.create(%{
           description: sample_letter.description,
@@ -119,7 +121,10 @@ defmodule Lob.LetterTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a letter with file as PDF", %{sample_address: sample_address, sample_letter: sample_letter} do
+    test "creates a letter with file as PDF", %{
+      sample_address: sample_address,
+      sample_letter: sample_letter
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_letter, headers} =
@@ -135,36 +140,48 @@ defmodule Lob.LetterTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a letter with an idempotency key", %{sample_address: sample_address, sample_letter: sample_letter} do
+    test "creates a letter with an idempotency key", %{
+      sample_address: sample_address,
+      sample_letter: sample_letter
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
       idempotency_key = UUID.uuid4()
 
       {:ok, created_letter, _headers} =
-        Letter.create(%{
-          description: sample_letter.description,
-          to: created_address.id,
-          from: created_address.id,
-          color: true,
-          file: %{local_path: "test/assets/8.5x11.pdf"}
-        }, %{
-          "Idempotency-Key" => idempotency_key
-        })
+        Letter.create(
+          %{
+            description: sample_letter.description,
+            to: created_address.id,
+            from: created_address.id,
+            color: true,
+            file: %{local_path: "test/assets/8.5x11.pdf"}
+          },
+          %{
+            "Idempotency-Key" => idempotency_key
+          }
+        )
 
       {:ok, duplicated_letter, _headers} =
-        Letter.create(%{
-          description: "Duplicated Letter",
-          to: created_address.id,
-          from: created_address.id,
-          color: true,
-          file: %{local_path: "test/assets/8.5x11.pdf"}
-        }, %{
-          "Idempotency-Key" => idempotency_key
-        })
+        Letter.create(
+          %{
+            description: "Duplicated Letter",
+            to: created_address.id,
+            from: created_address.id,
+            color: true,
+            file: %{local_path: "test/assets/8.5x11.pdf"}
+          },
+          %{
+            "Idempotency-Key" => idempotency_key
+          }
+        )
 
       assert created_letter.description == duplicated_letter.description
     end
 
-    test "creates a letter with a merge variable object", %{sample_address: sample_address, sample_letter: sample_letter} do
+    test "creates a letter with a merge variable object", %{
+      sample_address: sample_address,
+      sample_letter: sample_letter
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_letter, headers} =
@@ -184,12 +201,9 @@ defmodule Lob.LetterTest do
       assert created_letter.description == sample_letter.description
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
-
-
   end
 
   describe "delete/2" do
-
     test "deletes a letter", %{sample_address: sample_address, sample_letter: sample_letter} do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
@@ -202,11 +216,9 @@ defmodule Lob.LetterTest do
           file: %{local_path: "test/assets/8.5x11.pdf"}
         })
 
-        {:ok, deleted_letter, _headers} = Letter.delete(created_letter.id)
-        assert deleted_letter.id == created_letter.id
-        assert deleted_letter.deleted == true
+      {:ok, deleted_letter, _headers} = Letter.delete(created_letter.id)
+      assert deleted_letter.id == created_letter.id
+      assert deleted_letter.deleted == true
     end
-
   end
-
 end

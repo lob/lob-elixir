@@ -16,9 +16,10 @@ defmodule Lob.SelfMailerTest do
     }
 
     sample_self_mailer = %{
-      description: "Library Test Self Mailer #{DateTime.utc_now |> DateTime.to_string}",
+      description: "Library Test Self Mailer #{DateTime.utc_now() |> DateTime.to_string()}",
       outside: "<h1>Sample self mailer outside</h1>",
-      inside: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_inside.pdf"
+      inside:
+        "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_inside.pdf"
     }
 
     %{
@@ -28,7 +29,6 @@ defmodule Lob.SelfMailerTest do
   end
 
   describe "list/2" do
-
     test "lists self mailers" do
       {:ok, self_mailers, _headers} = SelfMailer.list()
       assert self_mailers.object == "list"
@@ -48,31 +48,35 @@ defmodule Lob.SelfMailerTest do
       {:ok, self_mailers, _headers} = SelfMailer.list(%{metadata: %{campaign: "LOB-TEST"}})
       assert self_mailers.count > 0
     end
-
   end
 
   describe "retrieve/2" do
-
-    test "retrieves a self mailer", %{sample_address: sample_address, sample_self_mailer: sample_self_mailer} do
+    test "retrieves a self mailer", %{
+      sample_address: sample_address,
+      sample_self_mailer: sample_self_mailer
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_self_mailer, _headers} =
         SelfMailer.create(%{
           description: sample_self_mailer.description,
           to: created_address.id,
-          outside: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_outside.pdf",
-          inside: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_inside.pdf"
+          outside:
+            "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_outside.pdf",
+          inside:
+            "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_inside.pdf"
         })
 
       {:ok, retrieved_self_mailer, _headers} = SelfMailer.retrieve(created_self_mailer.id)
       assert retrieved_self_mailer.description == created_self_mailer.description
     end
-
   end
 
   describe "create/2" do
-
-    test "creates a self mailer with address_id", %{sample_address: sample_address, sample_self_mailer: sample_self_mailer} do
+    test "creates a self mailer with address_id", %{
+      sample_address: sample_address,
+      sample_self_mailer: sample_self_mailer
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_self_mailer, headers} =
@@ -87,7 +91,10 @@ defmodule Lob.SelfMailerTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a self mailer with to address params", %{sample_self_mailer: sample_self_mailer, sample_address: sample_address} do
+    test "creates a self mailer with to address params", %{
+      sample_self_mailer: sample_self_mailer,
+      sample_address: sample_address
+    } do
       {:ok, created_self_mailer, headers} =
         SelfMailer.create(%{
           description: sample_self_mailer.description,
@@ -100,7 +107,10 @@ defmodule Lob.SelfMailerTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a self mailer with from address params", %{sample_address: sample_address, sample_self_mailer: sample_self_mailer} do
+    test "creates a self mailer with from address params", %{
+      sample_address: sample_address,
+      sample_self_mailer: sample_self_mailer
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_self_mailer, headers} =
@@ -108,7 +118,8 @@ defmodule Lob.SelfMailerTest do
           description: sample_self_mailer.description,
           to: created_address.id,
           from: sample_address,
-          outside: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_outside.pdf",
+          outside:
+            "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_outside.pdf",
           inside: sample_self_mailer.inside
         })
 
@@ -116,22 +127,30 @@ defmodule Lob.SelfMailerTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a self mailer with outside and inside as urls", %{sample_address: sample_address, sample_self_mailer: sample_self_mailer} do
+    test "creates a self mailer with outside and inside as urls", %{
+      sample_address: sample_address,
+      sample_self_mailer: sample_self_mailer
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_self_mailer, headers} =
         SelfMailer.create(%{
           description: sample_self_mailer.description,
           to: created_address.id,
-          outside: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_outside.pdf",
-          inside: "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_inside.pdf"
+          outside:
+            "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_outside.pdf",
+          inside:
+            "https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/self_mailers/6x18_sfm_inside.pdf"
         })
 
       assert created_self_mailer.description == sample_self_mailer.description
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a self mailer with outside and inside as PDFs", %{sample_address: sample_address, sample_self_mailer: sample_self_mailer} do
+    test "creates a self mailer with outside and inside as PDFs", %{
+      sample_address: sample_address,
+      sample_self_mailer: sample_self_mailer
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_self_mailer, headers} =
@@ -139,7 +158,7 @@ defmodule Lob.SelfMailerTest do
           description: sample_self_mailer.description,
           to: created_address.id,
           metadata: %{
-          "campaign" => "LOB-TEST"
+            "campaign" => "LOB-TEST"
           },
           outside: %{local_path: "test/assets/sfm-6x18-outside.pdf"},
           inside: %{local_path: "test/assets/sfm-6x18-inside.pdf"}
@@ -149,7 +168,10 @@ defmodule Lob.SelfMailerTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a 12x9 self mailer with outside and inside as PDFs", %{sample_address: sample_address, sample_self_mailer: sample_self_mailer} do
+    test "creates a 12x9 self mailer with outside and inside as PDFs", %{
+      sample_address: sample_address,
+      sample_self_mailer: sample_self_mailer
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_self_mailer, headers} =
@@ -165,34 +187,46 @@ defmodule Lob.SelfMailerTest do
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
 
-    test "creates a self mailer with an idempotency key", %{sample_address: sample_address, sample_self_mailer: sample_self_mailer} do
+    test "creates a self mailer with an idempotency key", %{
+      sample_address: sample_address,
+      sample_self_mailer: sample_self_mailer
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
       idempotency_key = UUID.uuid4()
 
       {:ok, created_self_mailer, _headers} =
-        SelfMailer.create(%{
-          description: sample_self_mailer.description,
-          to: created_address.id,
-          outside: %{local_path: "test/assets/sfm-6x18-outside.pdf"},
-          inside: %{local_path: "test/assets/sfm-6x18-inside.pdf"}
-        }, %{
-          "Idempotency-Key" => idempotency_key
-        })
+        SelfMailer.create(
+          %{
+            description: sample_self_mailer.description,
+            to: created_address.id,
+            outside: %{local_path: "test/assets/sfm-6x18-outside.pdf"},
+            inside: %{local_path: "test/assets/sfm-6x18-inside.pdf"}
+          },
+          %{
+            "Idempotency-Key" => idempotency_key
+          }
+        )
 
       {:ok, duplicated_self_mailer, _headers} =
-        SelfMailer.create(%{
-          description: "Duplicated SelfMailer",
-          to: created_address.id,
-          outside: %{local_path: "test/assets/sfm-6x18-outside.pdf"},
-          inside: %{local_path: "test/assets/sfm-6x18-inside.pdf"}
-        }, %{
-          "Idempotency-Key" => idempotency_key
-        })
+        SelfMailer.create(
+          %{
+            description: "Duplicated SelfMailer",
+            to: created_address.id,
+            outside: %{local_path: "test/assets/sfm-6x18-outside.pdf"},
+            inside: %{local_path: "test/assets/sfm-6x18-inside.pdf"}
+          },
+          %{
+            "Idempotency-Key" => idempotency_key
+          }
+        )
 
       assert created_self_mailer.description == duplicated_self_mailer.description
     end
 
-    test "creates a self mailer with a merge variable list", %{sample_address: sample_address, sample_self_mailer: sample_self_mailer} do
+    test "creates a self mailer with a merge variable list", %{
+      sample_address: sample_address,
+      sample_self_mailer: sample_self_mailer
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_self_mailer, headers} =
@@ -216,12 +250,13 @@ defmodule Lob.SelfMailerTest do
       assert created_self_mailer.description == sample_self_mailer.description
       assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
     end
-
   end
 
   describe "delete/2" do
-
-    test "deletes a self mailer", %{sample_address: sample_address, sample_self_mailer: sample_self_mailer} do
+    test "deletes a self mailer", %{
+      sample_address: sample_address,
+      sample_self_mailer: sample_self_mailer
+    } do
       {:ok, created_address, _headers} = Address.create(sample_address)
 
       {:ok, created_self_mailer, _headers} =
@@ -232,11 +267,9 @@ defmodule Lob.SelfMailerTest do
           inside: sample_self_mailer.inside
         })
 
-        {:ok, deleted_self_mailer, _headers} = SelfMailer.delete(created_self_mailer.id)
-        assert deleted_self_mailer.id == created_self_mailer.id
-        assert deleted_self_mailer.deleted == true
+      {:ok, deleted_self_mailer, _headers} = SelfMailer.delete(created_self_mailer.id)
+      assert deleted_self_mailer.id == created_self_mailer.id
+      assert deleted_self_mailer.deleted == true
     end
-
   end
-
 end

@@ -4,5 +4,4 @@ defmodule Lob.SelfMailer do
   """
 
   use Lob.ResourceBase, endpoint: "self_mailers", methods: [:create, :retrieve, :list, :delete]
-
 end

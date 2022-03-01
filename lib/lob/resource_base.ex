@@ -14,9 +14,12 @@ defmodule Lob.ResourceBase do
       alias Lob.Util
 
       if :list in unquote(methods) do
-        @spec list(map, map) :: Client.client_response
+        @spec list(map, map) :: Client.client_response()
         def list(params \\ %{}, headers \\ %{}) do
-          Client.get_request("#{base_url()}?#{Util.build_query_string(params)}" , Util.build_headers(headers))
+          Client.get_request(
+            "#{base_url()}?#{Util.build_query_string(params)}",
+            Util.build_headers(headers)
+          )
         end
 
         @spec list!(map, map) :: {map, list} | no_return
@@ -29,12 +32,12 @@ defmodule Lob.ResourceBase do
       end
 
       if :retrieve in unquote(methods) do
-        @spec retrieve(String.t, map) :: Client.client_response
+        @spec retrieve(String.t(), map) :: Client.client_response()
         def retrieve(id, headers \\ %{}) do
           Client.get_request(resource_url(id), Util.build_headers(headers))
         end
 
-        @spec retrieve!(String.t, map) :: {map, list} | no_return
+        @spec retrieve!(String.t(), map) :: {map, list} | no_return
         def retrieve!(id, headers \\ %{}) do
           case retrieve(id, headers) do
             {:ok, body, headers} -> {body, headers}
@@ -44,7 +47,7 @@ defmodule Lob.ResourceBase do
       end
 
       if :create in unquote(methods) do
-        @spec create(map, map) :: Client.client_response
+        @spec create(map, map) :: Client.client_response()
         def create(data, headers \\ %{}) do
           Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
         end
@@ -59,12 +62,12 @@ defmodule Lob.ResourceBase do
       end
 
       if :delete in unquote(methods) do
-        @spec delete(String.t, map) :: Client.client_response
+        @spec delete(String.t(), map) :: Client.client_response()
         def delete(id, headers \\ %{}) do
           Client.delete_request(resource_url(id), Util.build_headers(headers))
         end
 
-        @spec delete!(String.t, map) :: {map, list} | no_return
+        @spec delete!(String.t(), map) :: {map, list} | no_return
         def delete!(id, headers \\ %{}) do
           case delete(id, headers) do
             {:ok, body, headers} -> {body, headers}
@@ -83,12 +86,10 @@ defmodule Lob.ResourceBase do
         "#{Application.get_env(:lob_elixir, :api_host, @default_api_host)}"
       end
 
-      @spec resource_url(String.t) :: <<_::64, _::_*8>>
+      @spec resource_url(String.t()) :: <<_::64, _::_*8>>
       defp resource_url(resource_id) do
         "#{base_url()}/#{resource_id}"
       end
     end
-
   end
-
 end
