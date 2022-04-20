@@ -4,5 +4,4 @@ defmodule Lob.Letter do
   """
 
   use Lob.ResourceBase, endpoint: "letters", methods: [:create, :retrieve, :list, :delete]
-
 end

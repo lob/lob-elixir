@@ -65,6 +65,7 @@ defmodule Lob.Mixfile do
       formatters: ["html"]
     ]
   end
+
   defp package do
     [
       description: "Lob Elixir Library",

@@ -4,5 +4,4 @@ defmodule Lob.Postcard do
   """
 
   use Lob.ResourceBase, endpoint: "postcards", methods: [:create, :retrieve, :list, :delete]
-
 end
