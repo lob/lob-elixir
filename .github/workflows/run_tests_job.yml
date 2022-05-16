@@ -26,7 +26,7 @@ jobs:
     - name: Check Code Coverage & Upload to Coveralls.io
       run:  MIX_ENV=test mix coveralls.github --max-cases 1
       env:
-        API_KEY: ${{ secrets.API_KEY }}
+        LOB_API_TEST_KEY: ${{ secrets.LOB_API_TEST_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Run Static Code Analysis for Elixir
       run: mix credo
@@ -34,5 +34,5 @@ jobs:
       run: mix dialyzer --halt-exit-status
     - name: Run Elixir Tests
       env:
-        API_KEY: ${{ secrets.API_KEY }}
+        LOB_API_TEST_KEY: ${{ secrets.LOB_API_TEST_KEY }}
       run: mix deps.get && mix test
