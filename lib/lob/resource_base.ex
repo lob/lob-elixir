@@ -50,14 +50,14 @@ defmodule Lob.ResourceBase do
         @spec create(map, map, boolean) :: Client.client_response()
         def create(data, headers \\ %{}, json \\ false) do
           if json == true do
-            Client.post_request(base_url, data, Util.build_headers(headers))
+            Client.post_request(base_url(), data, Util.build_headers(headers))
           else
             Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
           end
         end
 
         @spec create!(map, map, boolean) :: {map, list} | no_return
-        def create!(data, headers \\ %{}, json) do
+        def create!(data, headers \\ %{}, json \\ false) do
           case create(data, headers, json) do
             {:ok, body, headers} -> {body, headers}
             {:error, error} -> raise to_string(error)
