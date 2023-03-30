@@ -1,4 +1,4 @@
-defmodule Lob.CampaignApi do
+defmodule Lob.Campaign do
   @moduledoc """
   uses Lob.ResourceBase to hit the campaigns endpoint.
   """

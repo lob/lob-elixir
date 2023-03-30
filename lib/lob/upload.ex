@@ -1,4 +1,4 @@
-defmodule Lob.UploadApi do
+defmodule Lob.Upload do
   @moduledoc """
   uses Lob.ResourceBase to hit the uploads endpoint.
   """

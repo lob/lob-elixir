@@ -1,4 +1,4 @@
-defmodule Lob.CreativeApi do
+defmodule Lob.Creative do
   @moduledoc """
   uses Lob.ResourceBase to hit the creatives endpoint.
   """
