@@ -50,7 +50,7 @@ defmodule Lob.ResourceBase do
         @spec create(map, map, boolean) :: Client.client_response()
         def create(data, headers \\ %{}, json \\ false) do
           if json == true do
-            Client.post_request(base_url(), data, Util.build_headers(headers))
+            Client.post_request_json(base_url(), data, Util.build_headers(headers))
           else
             Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
           end
