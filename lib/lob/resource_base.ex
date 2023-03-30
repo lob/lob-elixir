@@ -47,29 +47,18 @@ defmodule Lob.ResourceBase do
       end
 
       if :create in unquote(methods) do
-        @spec create(map, map) :: Client.client_response()
-        def create(data, headers \\ %{}) do
-          Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
-        end
-
-        @spec create!(map, map) :: {map, list} | no_return
-        def create!(data, headers \\ %{}) do
-          case create(data, headers) do
-            {:ok, body, headers} -> {body, headers}
-            {:error, error} -> raise to_string(error)
+        @spec create(map, map, boolean) :: Client.client_response()
+        def create(data, headers \\ %{}, json \\ false) do
+          if json == true do
+            Client.post_request(base_url, data, Util.build_headers(headers))
+          else
+            Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
           end
         end
-      end
 
-      if :create_json in unquote(methods) do
-        @spec create_json(map, map) :: Client.client_response()
-        def create_json(data, headers \\ %{}) do
-          Client.post_request(base_url(), data, Util.build_headers(headers))
-        end
-
-        @spec create_json!(map, map) :: {map, list} | no_return
-        def create_json!(data, headers \\ %{}) do
-          case create(data, headers) do
+        @spec create!(map, map, boolean) :: {map, list} | no_return
+        def create!(data, headers \\ %{}, json) do
+          case create(data, headers, json) do
             {:ok, body, headers} -> {body, headers}
             {:error, error} -> raise to_string(error)
           end

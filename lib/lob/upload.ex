@@ -8,7 +8,6 @@ defmodule Lob.Upload do
     methods: [
       :list,
       :create,
-      :create_json,
       :retrieve,
       :update,
       :delete,
