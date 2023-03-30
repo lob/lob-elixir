@@ -60,8 +60,21 @@ defmodule Lob.ResourceBase do
           end
         end
       end
-    end
 
+      if :create_json in unquote(methods) do
+        @spec create(map, map) :: Client.client_response()
+        def create(data, headers \\ %{}) do
+          Client.post_request(base_url(), Util.build_body(data), Util.build_headers(headers))
+        end
+
+        @spec create!(map, map) :: {map, list} | no_return
+        def create!(data, headers \\ %{}) do
+          case create(data, headers) do
+            {:ok, body, headers} -> {body, headers}
+            {:error, error} -> raise to_string(error)
+          end
+        end
+      end
 
       if :delete in unquote(methods) do
         @spec delete(String.t(), map) :: Client.client_response()
