@@ -63,12 +63,12 @@ defmodule Lob.ResourceBase do
 
       if :create_json in unquote(methods) do
         @spec create(map, map) :: Client.client_response()
-        def create(data, headers \\ %{}) do
+        def create_json(data, headers \\ %{}) do
           Client.post_request(base_url(), data, Util.build_headers(headers))
         end
 
         @spec create!(map, map) :: {map, list} | no_return
-        def create!(data, headers \\ %{}) do
+        def create_json!(data, headers \\ %{}) do
           case create(data, headers) do
             {:ok, body, headers} -> {body, headers}
             {:error, error} -> raise to_string(error)
