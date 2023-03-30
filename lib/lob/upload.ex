@@ -7,6 +7,7 @@ defmodule Lob.Upload do
     endpoint: "uploads",
     methods: [
       :list,
+      :create,
       :create_json,
       :retrieve,
       :update,
