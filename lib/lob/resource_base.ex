@@ -65,6 +65,25 @@ defmodule Lob.ResourceBase do
         end
       end
 
+      if :upload_file in unquote(methods) do
+        @spec upload_file(String.t(), map) :: Client.client_response()
+        def upload_file(id, data, headers \\ %{}) do
+          Client.post_request(
+            resource_url(id),
+            Util.build_body(data),
+            Util.build_headers(headers)
+          )
+        end
+
+        @spec upload_file!(String.t(), map) :: {map, list} | no_return
+        def upload_file!(id, data, headers \\ %{}) do
+          case upload_file(id, data, headers) do
+            {:ok, body, headers} -> {body, headers}
+            {:error, error} -> raise to_string(error)
+          end
+        end
+      end
+
       if :delete in unquote(methods) do
         @spec delete(String.t(), map) :: Client.client_response()
         def delete(id, headers \\ %{}) do
