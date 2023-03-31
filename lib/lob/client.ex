@@ -78,7 +78,11 @@ defmodule Lob.Client do
   @spec post_request_json(<<_::64, _::_*8>>, map) :: client_response
   def post_request_json(url, body, headers \\ []) do
     url
-    |> post(Jason.encode!(body), headers, build_options())
+    |> post(
+      Jason.encode!(body),
+      headers ++ [{"Content-Type", "application/json; charset=utf-8"}],
+      build_options()
+    )
     |> handle_response
   end
 
