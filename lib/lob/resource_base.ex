@@ -66,7 +66,7 @@ defmodule Lob.ResourceBase do
       end
 
       if :upload_file in unquote(methods) do
-        @spec upload_file(String.t(), map) :: Client.client_response()
+        @spec upload_file(String.t(), map, map) :: Client.client_response()
         def upload_file(id, data, headers \\ %{}) do
           Client.post_request(
             resource_url(id),
@@ -75,7 +75,7 @@ defmodule Lob.ResourceBase do
           )
         end
 
-        @spec upload_file!(String.t(), map) :: {map, list} | no_return
+        @spec upload_file!(String.t(), map, map) :: {map, list} | no_return
         def upload_file!(id, data, headers \\ %{}) do
           case upload_file(id, data, headers) do
             {:ok, body, headers} -> {body, headers}
