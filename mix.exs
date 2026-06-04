@@ -20,7 +20,6 @@ defmodule Lob.Mixfile do
         flags: [
           :error_handling,
           :no_opaque,
-          :race_conditions,
           :unknown
         ],
         ignore_warnings: ".dialyzer_ignore"

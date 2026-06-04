@@ -30,7 +30,7 @@ jobs:
     - name: Run Static Code Analysis for Elixir
       run: mix credo
     - name: Run Static Code Analysis for Erlang
-      run: mix dialyzer --halt-exit-status
+      run: mix dialyzer
     - name: Run Elixir Tests
       env:
         API_KEY: ${{ secrets.API_KEY }}
