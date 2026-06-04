@@ -101,7 +101,7 @@ defmodule Lob.LetterTest do
         })
 
       assert created_letter.description == sample_letter.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a letter with address params", %{
@@ -118,7 +118,7 @@ defmodule Lob.LetterTest do
         })
 
       assert created_letter.description == sample_letter.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a letter with file as PDF", %{
@@ -137,7 +137,7 @@ defmodule Lob.LetterTest do
         })
 
       assert created_letter.description == sample_letter.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a letter with an idempotency key", %{
@@ -199,7 +199,7 @@ defmodule Lob.LetterTest do
         })
 
       assert created_letter.description == sample_letter.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
   end
 

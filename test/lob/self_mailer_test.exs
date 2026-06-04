@@ -88,7 +88,7 @@ defmodule Lob.SelfMailerTest do
         })
 
       assert created_self_mailer.description == sample_self_mailer.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a self mailer with to address params", %{
@@ -104,7 +104,7 @@ defmodule Lob.SelfMailerTest do
         })
 
       assert created_self_mailer.description == sample_self_mailer.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a self mailer with from address params", %{
@@ -124,7 +124,7 @@ defmodule Lob.SelfMailerTest do
         })
 
       assert created_self_mailer.description == sample_self_mailer.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a self mailer with outside and inside as urls", %{
@@ -144,7 +144,7 @@ defmodule Lob.SelfMailerTest do
         })
 
       assert created_self_mailer.description == sample_self_mailer.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a self mailer with outside and inside as PDFs", %{
@@ -165,7 +165,7 @@ defmodule Lob.SelfMailerTest do
         })
 
       assert created_self_mailer.description == sample_self_mailer.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a 12x9 self mailer with outside and inside as PDFs", %{
@@ -184,7 +184,7 @@ defmodule Lob.SelfMailerTest do
         })
 
       assert created_self_mailer.description == sample_self_mailer.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a self mailer with an idempotency key", %{
@@ -248,7 +248,7 @@ defmodule Lob.SelfMailerTest do
         })
 
       assert created_self_mailer.description == sample_self_mailer.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
   end
 

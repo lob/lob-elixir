@@ -63,7 +63,7 @@ defmodule Lob.AddressTest do
       {:ok, created_address, headers} = Address.create(sample_address)
 
       assert created_address.name == String.upcase(sample_address.name)
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates an address with metadata", %{sample_address: sample_address} do
@@ -73,7 +73,7 @@ defmodule Lob.AddressTest do
         |> Address.create()
 
       assert created_address.name == String.upcase(sample_address.name)
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
   end
 
