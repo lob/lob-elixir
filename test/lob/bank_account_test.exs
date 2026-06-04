@@ -91,6 +91,7 @@ defmodule Lob.BankAccountTest do
 
     test "verifies a bank account with descriptor_code", %{sample_bank_account: sample_bank_account} do
       {:ok, created_bank_account, _headers} = BankAccount.create(sample_bank_account)
+      on_exit(fn -> BankAccount.delete(created_bank_account.id) end)
 
       {:ok, verified_bank_account, _headers} =
         BankAccount.verify(created_bank_account.id, %{descriptor_code: "SM11AA"})
@@ -102,12 +103,11 @@ defmodule Lob.BankAccountTest do
   describe "retrieve/2 microdeposit_type" do
     test "bank account response includes microdeposit_type field", %{sample_bank_account: sample_bank_account} do
       {:ok, created_bank_account, _headers} = BankAccount.create(sample_bank_account)
+      on_exit(fn -> BankAccount.delete(created_bank_account.id) end)
 
       {:ok, retrieved_bank_account, _headers} = BankAccount.retrieve(created_bank_account.id)
       assert Map.has_key?(retrieved_bank_account, :microdeposit_type)
       assert retrieved_bank_account.microdeposit_type in ["amounts", "descriptor_code", nil]
-
-      BankAccount.delete(created_bank_account.id)
     end
   end
 end

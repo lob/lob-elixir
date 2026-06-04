@@ -110,7 +110,12 @@ defmodule Lob.Client do
 
   @spec build_options(String.t()) :: Keyword.t()
   defp build_options(api_key \\ api_key()) do
-    ssl_opts = Application.get_env(:lob_elixir, :hackney_ssl_options, [])
+    ssl_opts =
+      case Application.get_env(:lob_elixir, :hackney_ssl_options, []) do
+        fun when is_function(fun, 0) -> fun.()
+        opts -> opts
+      end
+
     [hackney: [basic_auth: {api_key, ""}, ssl_options: ssl_opts], recv_timeout: :infinity]
   end
 
