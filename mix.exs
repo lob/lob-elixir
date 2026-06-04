@@ -43,7 +43,7 @@ defmodule Lob.Mixfile do
     [
       {:bypass, "~> 2.1", only: :test},
       {:confex, "~> 3.5.0"},
-      {:credo, "~> 1.5.6", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: [:dev], runtime: false},
       {:excoveralls, "~> 0.14", only: :test},
