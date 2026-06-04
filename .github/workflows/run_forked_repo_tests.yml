@@ -9,15 +9,15 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'Approved')
     strategy:
       matrix:
-        elixir-version: ['1.12']
-        otp: ['22.0']
+        elixir-version: ['1.18']
+        otp: ['27']
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Setup Elixir
       uses: erlef/setup-beam@v1
       with:
-        otp-version: '22.0'
-        elixir-version: '1.12'
+        otp-version: '27'
+        elixir-version: '1.18'
     - name: Install Dependencies
       run: mix deps.get
     - name: Compile Repository
