@@ -1,3 +1,9 @@
+#### 1.6.0 (2026-06-04)
+
+##### New Features
+
+* **bank-accounts:**  Add `descriptor_code` support to bank account verification and expose `microdeposit_type` in bank account responses ([BILL-5592](https://lobsters.atlassian.net/browse/BILL-5592))
+
 #### 1.3.0 (2021-08-25)
 
 ##### New Features

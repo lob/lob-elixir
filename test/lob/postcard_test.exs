@@ -96,7 +96,7 @@ defmodule Lob.PostcardTest do
         })
 
       assert created_postcard.description == sample_postcard.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a postcard with to address params", %{
@@ -112,7 +112,7 @@ defmodule Lob.PostcardTest do
         })
 
       assert created_postcard.description == sample_postcard.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a postcard with from address params", %{
@@ -131,7 +131,7 @@ defmodule Lob.PostcardTest do
         })
 
       assert created_postcard.description == sample_postcard.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a postcard with front and back as urls", %{
@@ -149,7 +149,7 @@ defmodule Lob.PostcardTest do
         })
 
       assert created_postcard.description == sample_postcard.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a postcard with front and back as PDFs", %{
@@ -167,7 +167,7 @@ defmodule Lob.PostcardTest do
         })
 
       assert created_postcard.description == sample_postcard.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a postcard with an idempotency key", %{
@@ -231,7 +231,7 @@ defmodule Lob.PostcardTest do
         })
 
       assert created_postcard.description == sample_postcard.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
   end
 

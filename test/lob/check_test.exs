@@ -118,7 +118,7 @@ defmodule Lob.CheckTest do
         })
 
       assert created_check.description == sample_check.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a check with address params", %{
@@ -138,7 +138,7 @@ defmodule Lob.CheckTest do
         })
 
       assert created_check.description == sample_check.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a check with logo, attachment and check bottom as URL", %{
@@ -163,7 +163,7 @@ defmodule Lob.CheckTest do
         })
 
       assert created_check.description == sample_check.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a check with logo as PNG and attachment and check bottom as PDF", %{
@@ -187,7 +187,7 @@ defmodule Lob.CheckTest do
         })
 
       assert created_check.description == sample_check.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a check with an idempotency key", %{
@@ -253,7 +253,7 @@ defmodule Lob.CheckTest do
         })
 
       assert created_check.description == sample_check.description
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
   end
 

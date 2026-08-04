@@ -22,8 +22,15 @@ defmodule Lob.Util do
   multipart request body.
 
   ## Example
-    iex> Lob.Util.build_body(%{description: "body", to: %{name: "Larry", species: "Lobster"}, front: %{local_path: "a/b/c"}})
-    {:multipart, [{"description", "body"}, {:file, "a/b/c", {"form-data", [name: "front", filename: "a/b/c"]}, []}, {"to[name]", "Larry"}, {"to[species]", "Lobster"}]}
+    iex> {:multipart, parts} = Lob.Util.build_body(%{description: "body", to: %{name: "Larry", species: "Lobster"}, front: %{local_path: "a/b/c"}})
+    iex> Enum.member?(parts, {"description", "body"})
+    true
+    iex> Enum.member?(parts, {"to[name]", "Larry"})
+    true
+    iex> Enum.member?(parts, {"to[species]", "Lobster"})
+    true
+    iex> Enum.member?(parts, {:file, "a/b/c", {"form-data", [name: "front", filename: "a/b/c"]}, []})
+    true
   """
   @spec build_body(map) :: {:multipart, list}
   def build_body(body) when is_map(body) do

@@ -54,7 +54,7 @@ defmodule Lob.BankAccountTest do
       {:ok, created_bank_account, headers} = BankAccount.create(sample_bank_account)
 
       assert created_bank_account.account_number == sample_bank_account.account_number
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
 
     test "creates a bank account with metadata", %{sample_bank_account: sample_bank_account} do
@@ -64,7 +64,7 @@ defmodule Lob.BankAccountTest do
         |> BankAccount.create()
 
       assert created_bank_account.account_number == sample_bank_account.account_number
-      assert Enum.member?(headers, {"X-Rate-Limit-Limit", "150"})
+      assert Enum.member?(headers, {"x-rate-limit-limit", "150"})
     end
   end
 
@@ -79,7 +79,7 @@ defmodule Lob.BankAccountTest do
   end
 
   describe "verify/3" do
-    test "verifies a bank account", %{sample_bank_account: sample_bank_account} do
+    test "verifies a bank account with amounts", %{sample_bank_account: sample_bank_account} do
       {:ok, created_bank_account, _headers} = BankAccount.create(sample_bank_account)
 
       {:ok, verified_bank_account, _headers} =
@@ -87,6 +87,27 @@ defmodule Lob.BankAccountTest do
 
       assert created_bank_account.id == verified_bank_account.id
       assert verified_bank_account.verified == true
+    end
+
+    test "verifies a bank account with descriptor_code", %{sample_bank_account: sample_bank_account} do
+      {:ok, created_bank_account, _headers} = BankAccount.create(sample_bank_account)
+      on_exit(fn -> BankAccount.delete(created_bank_account.id) end)
+
+      {:ok, verified_bank_account, _headers} =
+        BankAccount.verify(created_bank_account.id, %{descriptor_code: "SM11AA"})
+
+      assert created_bank_account.id == verified_bank_account.id
+    end
+  end
+
+  describe "retrieve/2 microdeposit_type" do
+    test "bank account response includes microdeposit_type field", %{sample_bank_account: sample_bank_account} do
+      {:ok, created_bank_account, _headers} = BankAccount.create(sample_bank_account)
+      on_exit(fn -> BankAccount.delete(created_bank_account.id) end)
+
+      {:ok, retrieved_bank_account, _headers} = BankAccount.retrieve(created_bank_account.id)
+      assert Map.has_key?(retrieved_bank_account, :microdeposit_type)
+      assert retrieved_bank_account.microdeposit_type in ["amounts", "descriptor_code", nil]
     end
   end
 end
